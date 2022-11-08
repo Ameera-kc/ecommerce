@@ -2,6 +2,8 @@ from django.shortcuts import render
 
 # Create your views here.
 
+def test(request):
+    return render(request, "web/test.html", )
 
 def about_us(request):
     context = {}

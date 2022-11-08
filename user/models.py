@@ -1,18 +1,17 @@
 from django.db import models
-from phonenumber_field.modelfields import PhoneNumberField
 from phone_field import PhoneField
 from versatileimagefield.fields import VersatileImageField
 from tinymce.models import HTMLField
 # Create your models here.
 
-class User(models.Model):
-    username = models.CharField(max_length = 100)
+class Customer(models.Model):
+    customer = models.CharField(max_length = 100)
     password = models.CharField(max_length = 100)
     phone = PhoneField(blank=True, help_text='Contact phone number')
     email = models.EmailField(max_length=254)
     
     def __str__(self):
-        return self.username
+        return self.customer
     
     
 class Category(models.Model):

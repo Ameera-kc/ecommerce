@@ -1,5 +1,5 @@
 from django.db import models
-from phonenumber_field.modelfields import PhoneNumberField
+
 from phone_field import PhoneField
 from versatileimagefield.fields import VersatileImageField
 from tinymce.models import HTMLField

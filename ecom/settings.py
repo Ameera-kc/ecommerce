@@ -148,3 +148,6 @@ VERSATILEIMAGEFIELD_SETTINGS = {
     'image_key_post_processor': None,
     'progressive_jpeg': False
 }
+
+AUTH_USER_MODEL = "user.Login"
+

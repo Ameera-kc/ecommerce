@@ -56,7 +56,7 @@
                             <ol class="breadcrumb mb-0">
                                 <li class="breadcrumb-item">
                                     <a href="index.html">
-                                        <i class="fa-solid fa-house"></i>
+                                        <i class="fa fa-2x fa-solid fa-house"></i>
                                     </a>
                                 </li>
                                 <li class="breadcrumb-item active">Sign In</li>
@@ -88,25 +88,59 @@
                         </div>
 
                         <div class="input-box">
-                            <form class="row g-4">
+                            <form class="row g-4" method="POST">
+                                {% csrf_token %}
                                 <div class="col-12">
                                     <div class="form-floating theme-form-floating">
-                                        <input type="text" class="form-control" id="fullname" placeholder="Full Name">
+                                        {% comment %} <input type="text" class="form-control" name="fullname" placeholder="Full Name" value={{user_form.customer_name}}> {% endcomment %}
+                                        {{user_form.customer_name}}
                                         <label for="fullname">Full Name</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-floating theme-form-floating">
-                                        <input type="email" class="form-control" id="email" placeholder="Email Address">
+                                        {% comment %} <input type="email" class="form-control" name="email" placeholder="Email Address" value={{user_form.email}}> {% endcomment %}
+                                        {{user_form.email}}
                                         <label for="email">Email Address</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating theme-form-floating">
+                                        {% comment %} <input type="text" class="form-control" name="number" placeholder="Phone Number"> {% endcomment %}
+                                        {{user_form.phone_number}}
+                                        <label for="number">Phone Number</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating theme-form-floating">
+                                        {% comment %} <input type="text" class="form-control" name="address" placeholder="Address" value={{user_form.address}}> {% endcomment %}
+                                        {{user_form.address}}
+                                        <label for="Address">Address</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating theme-form-floating">
+                                        {% comment %} <input type="text" class="form-control" name="username" placeholder="Address" value={{login_form.username}}> {% endcomment %}
+                                        {{login_form.username}}
+                                        <label for="Address">Username</label>
                                     </div>
                                 </div>
 
                                 <div class="col-12">
                                     <div class="form-floating theme-form-floating">
-                                        <input type="password" class="form-control" id="password"
-                                            placeholder="Password">
+                                        {% comment %} <input type="password" class="form-control" name="password"
+                                            placeholder="Password" value={{login_form.password1}}> {% endcomment %}
+                                            {{login_form.password1}}
                                         <label for="password">Password</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-floating theme-form-floating">
+                                         {% comment %} <input type="password" class="form-control" name="password2"
+                                            placeholder="Confirm Password" value={{login_form.password2}}>  {% endcomment %}
+                                             {{login_form.password2}} 
+                                            <label for="password2">Confirm Password</label>
                                     </div>
                                 </div>
 
@@ -120,6 +154,7 @@
                                         </div>
                                     </div>
                                 </div>
+                               
 
                                 <div class="col-12">
                                     <button class="btn btn-animation w-100" type="submit">Sign Up</button>

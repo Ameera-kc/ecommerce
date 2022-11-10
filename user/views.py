@@ -1,9 +1,100 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
+from .forms import LoginRegister, UserRegistration
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
 
 # Create your views here.
+@csrf_exempt
+def login_views(request):
+    if request.method == 'POST':
+        username = request.POST.get('uname')
+        password = request.POST.get('pass')
+        
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
+            if user.is_customer:
+                return redirect('/')
+        else:
+            messages.info(request, 'Invalid Credentials')
+    return render(request, 'web/login.html')
 
-def test(request):
-    return render(request, "web/test.html", )
+@csrf_exempt
+def user_register(request):
+    login_form = LoginRegister()
+    user_form = UserRegistration()
+    print("hi")
+    if request.method == "POST":
+        login_form = LoginRegister(request.POST)
+        print(login_form)
+        user_form = UserRegistration(request.POST)
+        print(user_form)
+        print("hlo")
+        if login_form.is_valid() and user_form.is_valid():
+            print("valid")
+            user = login_form.save(commit=False)
+            user.is_user = True
+            user.save()
+            print("hloo")
+            c = user_form.save(commit=False)
+            c.user = user
+            c.save()
+            print("hloo")
+            messages.info(request, 'User Registration Successfully')
+            return redirect('user:login')
+    return render(request, 'web/sign-up.html', {'login_form': login_form, 'user_form': user_form})
+
+
+
+
+
+
+# def customer_registration(request):
+  
+#     if request.method == "POST":
+#         customer_name = request.POST['fullname']
+#         phone_number = request.POST['number']
+#         email = request.POST['email']
+#         address = request.POST['address']     
+#         customer = Customer.objects.create(customer_name=customer_name, phone_number=phone_number, email=email, address=address)
+#         customer.save()
+#         return render(request,'web/login.html')
+#     return render(request,'web/sign-up.html')
+
+# @csrf_exempt
+# def register(request):
+#     if request.method == "GET":
+#         user_form = UserForm()
+#         return render(request, "web/sign-up.html", {'user_form': user_form})
+#     elif request.method == 'POST':
+#         customer_name = request.POST['fullname']
+#         phone_number = request.POST['number']
+#         email = request.POST['email']
+#         address = request.POST['address']
+#         password1 = request.POST['password1'] 
+#         password2 = request.POST['password2']     
+#         user = User.objects.create(customer_name=customer_name, phone_number=phone_number, email=email, address=address, password1=password1, password2=password2)
+#         user.save()
+#         return render(request,'web/login.html')
+#     return render(request,'web/sign-up.html')
+        
+
+
+# @csrf_exempt
+# def login(request):
+#     if request.method == "POST":
+#         phone_number = request.POST['phone_number']
+#         password = request.POST['password']
+#         user = authenticate(phone_number=phone_number, password=password)
+#         print(user)
+#         if user is not None:
+#             login(request, user)
+#             return render(request,"web:index.html")
+#     return render(request,'web/login.html')
+
 
 def about_us(request):
     context = {}
@@ -103,11 +194,6 @@ def index_9(request):
 def index(request):
     context = {}
     return render(request, "web/index.html", context)
-
-
-def login(request):
-    context = {}
-    return render(request, "web/login.html", context)
 
 
 def order_success(request):

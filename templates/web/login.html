@@ -57,7 +57,7 @@
                             <ol class="breadcrumb mb-0">
                                 <li class="breadcrumb-item">
                                     <a href="index.html">
-                                        <i class="fa-solid fa-house"></i>
+                                        <i class="fa fa-2x fa-solid fa-house"></i>
                                     </a>
                                 </li>
                                 <li class="breadcrumb-item active">Log In</li>
@@ -88,18 +88,19 @@
                             <h4>Log In Your Account</h4>
                         </div>
 
-                        <div class="input-box">
-                            <form class="row g-4">
+                        <div class="input-box">               
+                            <form class="row g-4" method="POST">
+                                {% csrf_token %}
                                 <div class="col-12">
                                     <div class="form-floating theme-form-floating log-in-form">
-                                        <input type="email" class="form-control" id="email" placeholder="Email Address">
-                                        <label for="email">Email Address</label>
+                                        <input type="text" class="form-control" id="username" name="uname" placeholder="Phone Number">
+                                        <label for="phone_number">Username</label>
                                     </div>
                                 </div>
 
                                 <div class="col-12">
                                     <div class="form-floating theme-form-floating log-in-form">
-                                        <input type="password" class="form-control" id="password"
+                                        <input type="password" class="form-control" id="password" name = "pass"
                                             placeholder="Password">
                                         <label for="password">Password</label>
                                     </div>
@@ -163,59 +164,7 @@
    
     <!-- Footer Section End -->
 
-    <!-- Tap to top start -->
-    <div class="theme-option">
-        <div class="setting-box">
-            <button class="btn setting-button">
-                <i class="fa-solid fa-gear"></i>
-            </button>
-
-            <div class="theme-setting-2">
-                <div class="theme-box">
-                    <ul>
-                        <li>
-                            <div class="setting-name">
-                                <h4>Color</h4>
-                            </div>
-                            <div class="theme-setting-button color-picker">
-                                <form class="form-control">
-                                    <label for="colorPick" class="form-label mb-0">Theme Color</label>
-                                    <input type="color" class="form-control form-control-color" id="colorPick"
-                                        value="#0da487" title="Choose your color">
-                                </form>
-                            </div>
-                        </li>
-
-                        <li>
-                            <div class="setting-name">
-                                <h4>Dark</h4>
-                            </div>
-                            <div class="theme-setting-button">
-                                <button class="btn btn-2 outline" id="darkButton">Dark</button>
-                                <button class="btn btn-2 unline" id="lightButton">Light</button>
-                            </div>
-                        </li>
-
-                        <li>
-                            <div class="setting-name">
-                                <h4>RTL</h4>
-                            </div>
-                            <div class="theme-setting-button rtl">
-                                <button class="btn btn-2 rtl-unline">LTR</button>
-                                <button class="btn btn-2 rtl-outline">RTL</button>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="back-to-top">
-            <a id="back-to-top" href="#">
-                <i class="fas fa-chevron-up"></i>
-            </a>
-        </div>
-    </div>
+ 
     <!-- Tap to top end -->
 
     <!-- Bg overlay Start -->

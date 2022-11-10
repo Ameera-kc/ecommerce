@@ -1,17 +1,58 @@
 from django.db import models
-from phone_field import PhoneField
 from versatileimagefield.fields import VersatileImageField
 from tinymce.models import HTMLField
+
+from django.contrib.auth.models import (
+    AbstractUser,
+ )
+
 # Create your models here.
 
-class Customer(models.Model):
-    customer = models.CharField(max_length = 100)
-    password = models.CharField(max_length = 100)
-    phone = PhoneField(blank=True, help_text='Contact phone number')
-    email = models.EmailField(max_length=254)
+
+# class UserManager(BaseUserManager):
+#     def create_user(self, username, password=None, **extra_fields):
+
+#         user = self.model(username=username, **extra_fields)
+#         user.set_password(password)
+#         user.save(using=self._db)
+#         if user:
+#             return user
+
+#     def create_superuser(self, username, password=None, **extra_fields):
+
+#         user = self.model(username=username, **extra_fields)
+#         user.set_password(password)
+#         user.is_superuser = True
+#         user.is_staff = True
+#         user.save(using=self._db)
+#         return user
+
+class Login(AbstractUser):
+    is_customer = models.BooleanField(default=False)
     
-    def __str__(self):
-        return self.customer
+
+class Customer(models.Model):
+    user = models.OneToOneField(Login, on_delete=models.CASCADE, related_name='user')
+    customer_name = models.CharField(max_length = 100,null=True)
+    phone_number = models.CharField(default=0, null=True, max_length=10, unique = True)  
+    email = models.EmailField(max_length=254,null=True)
+    address = models.CharField(max_length = 250)
+    
+   
+
+
+
+# class Customer(models.Model):
+#     user = models.OneToOneField(User,on_delete=models.CASCADE,null=True)
+#     customer_name = models.CharField(max_length = 100,null=True)
+#     phone_number = models.CharField(max_length=50,blank=True,null=True)
+#     email = models.EmailField(max_length=254,null=True)
+#     address = models.CharField(max_length = 250)
+#     username = models.CharField(max_length=100,null=True)
+    
+
+    # def __str__(self):
+    #     return self.customer_name
     
     
 class Category(models.Model):

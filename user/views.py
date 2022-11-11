@@ -4,6 +4,9 @@ from .forms import LoginRegister, UserRegistration
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
+from . models import MainBanner,SubBanners
+
+
 
 # Create your views here.
 @csrf_exempt
@@ -48,6 +51,15 @@ def user_register(request):
     return render(request, 'web/sign-up.html', {'login_form': login_form, 'user_form': user_form})
 
 
+
+def index(request):
+    mainbanner = MainBanner.objects.last()
+    subbanners = SubBanners.objects.last()
+    context = {
+        "mainbanner":mainbanner,
+        "subbanner":subbanners,
+    }
+    return render(request, "web/index.html", context)
 
 
 
@@ -191,9 +203,7 @@ def index_9(request):
     return render(request, "web/index-9.html", context)
 
 
-def index(request):
-    context = {}
-    return render(request, "web/index.html", context)
+
 
 
 def order_success(request):

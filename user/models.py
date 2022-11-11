@@ -69,17 +69,14 @@ class Product(models.Model):
 
 class MainBanner(models.Model):
     bannerbig = VersatileImageField(upload_to="MainBanner/", null=True)
-        
-    def __str__(self):
-        return self.bannerbig
+
 
 
 class SubBanners(models.Model):
-    sub_banner1 = VersatileImageField(upload_to="SubBanners/", null=True)
-    sub_banner2 = VersatileImageField(upload_to="SubBanners/", null=True)
+    subbanner1 = VersatileImageField(upload_to="SubBanners/", null=True)
+    subbanner2 = VersatileImageField(upload_to="SubBanners/", null=True)
 
-    def __str__(self):
-        return self.sub_banner1
+
     
 
 class HeaderFlash(models.Model):
@@ -92,3 +89,6 @@ class HeaderFlash(models.Model):
         
 def get_absolute_url(self):
     return reverse("_detail", kwargs={"pk": self.pk})
+
+
+

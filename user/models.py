@@ -9,24 +9,6 @@ from django.contrib.auth.models import (
 # Create your models here.
 
 
-# class UserManager(BaseUserManager):
-#     def create_user(self, username, password=None, **extra_fields):
-
-#         user = self.model(username=username, **extra_fields)
-#         user.set_password(password)
-#         user.save(using=self._db)
-#         if user:
-#             return user
-
-#     def create_superuser(self, username, password=None, **extra_fields):
-
-#         user = self.model(username=username, **extra_fields)
-#         user.set_password(password)
-#         user.is_superuser = True
-#         user.is_staff = True
-#         user.save(using=self._db)
-#         return user
-
 class Login(AbstractUser):
     is_customer = models.BooleanField(default=False)
     

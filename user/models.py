@@ -1,7 +1,7 @@
 from django.db import models
 from versatileimagefield.fields import VersatileImageField
 from tinymce.models import HTMLField
-
+from django.urls import reverse_lazy
 from django.contrib.auth.models import (
     AbstractUser,
  )
@@ -35,23 +35,32 @@ class Customer(models.Model):
 
     # def __str__(self):
     #     return self.customer_name
-    
+
     
 class Category(models.Model):
-    category = models.CharField(max_length = 200)
+    category = models.CharField(max_length = 200,unique=True)
     image = VersatileImageField(upload_to="categories/", null=True)
-     
+    
+    def get_absolute_url(self):
+        return reverse_lazy("user:shop", kwargs={"id": self.id})
+    
+    def get_subcategories(self):
+        return SubCategory.objects.filter(category=self) 
+         
     def __str__(self):
         return self.category
-    
     
 class SubCategory(models.Model):
     subcategory = models.CharField(max_length = 150)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
+    def get_products(self):
+        return Product.objects.filter(subcategory=self) 
+    
     def __str__(self):
         return self.subcategory
-    
+       
+
     
 class Product(models.Model):
     product = models.CharField(max_length = 150)

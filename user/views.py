@@ -48,52 +48,11 @@ def user_register(request):
     return render(request, 'web/sign-up.html', {'login_form': login_form, 'user_form': user_form})
 
 
+def index(request):
+    context = {}
+    return render(request, "web/index.html", context)
 
 
-
-
-# def customer_registration(request):
-  
-#     if request.method == "POST":
-#         customer_name = request.POST['fullname']
-#         phone_number = request.POST['number']
-#         email = request.POST['email']
-#         address = request.POST['address']     
-#         customer = Customer.objects.create(customer_name=customer_name, phone_number=phone_number, email=email, address=address)
-#         customer.save()
-#         return render(request,'web/login.html')
-#     return render(request,'web/sign-up.html')
-
-# @csrf_exempt
-# def register(request):
-#     if request.method == "GET":
-#         user_form = UserForm()
-#         return render(request, "web/sign-up.html", {'user_form': user_form})
-#     elif request.method == 'POST':
-#         customer_name = request.POST['fullname']
-#         phone_number = request.POST['number']
-#         email = request.POST['email']
-#         address = request.POST['address']
-#         password1 = request.POST['password1'] 
-#         password2 = request.POST['password2']     
-#         user = User.objects.create(customer_name=customer_name, phone_number=phone_number, email=email, address=address, password1=password1, password2=password2)
-#         user.save()
-#         return render(request,'web/login.html')
-#     return render(request,'web/sign-up.html')
-        
-
-
-# @csrf_exempt
-# def login(request):
-#     if request.method == "POST":
-#         phone_number = request.POST['phone_number']
-#         password = request.POST['password']
-#         user = authenticate(phone_number=phone_number, password=password)
-#         print(user)
-#         if user is not None:
-#             login(request, user)
-#             return render(request,"web:index.html")
-#     return render(request,'web/login.html')
 
 
 def about_us(request):
@@ -191,9 +150,7 @@ def index_9(request):
     return render(request, "web/index-9.html", context)
 
 
-def index(request):
-    context = {}
-    return render(request, "web/index.html", context)
+
 
 
 def order_success(request):
@@ -296,7 +253,7 @@ def shop_category(request):
     return render(request, "web/shop-category.html", context)
 
 
-def shop_left_sidebar(request):
+def shop(request):
     context = {}
     return render(request, "web/shop-left-sidebar.html", context)
 

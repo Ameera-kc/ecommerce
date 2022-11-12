@@ -51,9 +51,7 @@ def user_register(request):
     return render(request, 'web/sign-up.html', {'login_form': login_form, 'user_form': user_form})
 
 
-def index(request):
-    context = {}
-    return render(request, "web/index.html", context)
+
 
 def index(request):
     mainbanner = MainBanner.objects.last()

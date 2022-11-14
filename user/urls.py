@@ -50,7 +50,7 @@ urlpatterns = [
     path("shop-right-sidebar", views.shop_right_sidebar, name="shop_right_sidebar"),
     path("shop-top-filter", views.shop_top_filter, name="shop_top_filter"),
     path("sign-up", views.user_register, name="sign_up"),
-    path("user-dashboard", views.user_dashboard, name="dashboard"),
+    path("dashboard", views.user_dashboard, name="dashboard"),
     path("wishlist/<int:id>", views.wishlist, name="wishlist"),
     path("404", views.error_404, name="error_404"),
     

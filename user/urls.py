@@ -33,7 +33,7 @@ urlpatterns = [
     path("product-bundle", views.product_bundle, name="product_bundle"),
     path("product-left-thumbnail", views.product_left_thumbnail, name="product_left_thumbnail"),
     path("product-right-thumbnail", views.product_right_thumbnail, name="product_right_thumbnail"),
-    path("product-slider", views.product_slider, name="product_slider"),
+    path("product/<int:id>", views.product, name="product"),
     path("product-sticky", views.product_sticky, name="product_sticky"),
     path("search", views.search, name="search"),
     path("seller-become", views.seller_become, name="seller_become"),
@@ -51,7 +51,7 @@ urlpatterns = [
     path("shop-top-filter", views.shop_top_filter, name="shop_top_filter"),
     path("sign-up", views.user_register, name="sign_up"),
     path("user-dashboard", views.user_dashboard, name="user_dashboard"),
-    path("wishlist", views.wishlist, name="wishlist"),
+    path("wishlist/<int:id>", views.wishlist, name="wishlist"),
     path("404", views.error_404, name="error_404"),
     
 ]

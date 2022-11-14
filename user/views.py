@@ -4,7 +4,7 @@ from .forms import LoginRegister, UserRegistration
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from . models import MainBanner,SubBanners
+from . models import MainBanner, SubBanners, Product, SubCategory
 
 
 
@@ -56,13 +56,25 @@ def user_register(request):
 def index(request):
     mainbanner = MainBanner.objects.last()
     subbanners = SubBanners.objects.last()
+    topsave = Product.objects.filter(is_top_save_today = True)
+    bestseller = Product.objects.filter(is_best_seller = True).count()
+    bestseller1 = Product.objects.filter(is_best_seller = True)[::-1]
+    bestseller2 = Product.objects.filter(is_best_seller = True)[::-1]
     context = {
         "mainbanner":mainbanner,
         "subbanner":subbanners,
+        "topsave":topsave,
+        "bestseller1":bestseller1,
+        "bestseller2":bestseller2
     }
     return render(request, "web/index.html", context)
 
 
+def product(request, id):
+    subcategory = SubCategory.objects.get(id=id)
+    products = Product.objects.filter(id=id)
+    context = {"products": products, "subcategory": subcategory}
+    return render(request, "web/product-slider.html", context)
 
 
 def about_us(request):
@@ -203,10 +215,6 @@ def product_right_thumbnail(request):
     return render(request, "web/product-right-thumbnail.html", context)
 
 
-def product_slider(request):
-    context = {}
-    return render(request, "web/product-slider.html", context)
-
 
 def product_sticky(request):
     context = {}
@@ -293,7 +301,7 @@ def user_dashboard(request):
     return render(request, "web/user-dashboard.html", context)
 
 
-def wishlist(request):
+def wishlist(request, id):
     context = {}
     return render(request, "web/wishlist.html", context)
 

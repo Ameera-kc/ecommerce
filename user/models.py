@@ -19,22 +19,6 @@ class Customer(models.Model):
     phone_number = models.CharField(default=0, null=True, max_length=10, unique = True)  
     email = models.EmailField(max_length=254,null=True)
     address = models.CharField(max_length = 250)
-    
-   
-
-
-
-# class Customer(models.Model):
-#     user = models.OneToOneField(User,on_delete=models.CASCADE,null=True)
-#     customer_name = models.CharField(max_length = 100,null=True)
-#     phone_number = models.CharField(max_length=50,blank=True,null=True)
-#     email = models.EmailField(max_length=254,null=True)
-#     address = models.CharField(max_length = 250)
-#     username = models.CharField(max_length=100,null=True)
-    
-
-    # def __str__(self):
-    #     return self.customer_name
 
     
 class Category(models.Model):
@@ -89,7 +73,7 @@ class SubBanners(models.Model):
     
 
 class HeaderFlash(models.Model):
-    address =  HTMLField()
+    address =  models.CharField(max_length = 150)
     offer_product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
     
     def __str__(self):

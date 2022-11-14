@@ -84,32 +84,32 @@
                 </div>
 
                 <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
-                    <div class="footer-title">
+                    {% comment %} <div class="footer-title">
                         <h4>Categories</h4>
-                    </div>
+                    </div> {% endcomment %}
 
-                    <div class="footer-contain">
+                    {% comment %} <div class="footer-contain">
                         <ul>
                             <li>
-                                <a href="{% url 'web:shop' %}" class="text-content">Vegetables & Fruit</a>
+                                <a href="" class="text-content">Vegetables & Fruit</a>
                             </li>
                             <li>
-                                <a href="{% url 'web:shop' %}" class="text-content">Beverages</a>
+                                <a href="" class="text-content">Beverages</a>
                             </li>
                             <li>
-                                <a href="{% url 'web:shop' %}" class="text-content">Meats & Seafood</a>
+                                <a href="" class="text-content">Meats & Seafood</a>
                             </li>
                             <li>
-                                <a href="{% url 'web:shop' %}" class="text-content">Frozen Foods</a>
+                                <a href="" class="text-content">Frozen Foods</a>
                             </li>
                             <li>
-                                <a href="{% url 'web:shop' %}" class="text-content">Biscuits & Snacks</a>
+                                <a href="" class="text-content">Biscuits & Snacks</a>
                             </li>
                             <li>
-                                <a href="{% url 'web:shop' %}" class="text-content">Grocery & Staples</a>
+                                <a href="" class="text-content">Grocery & Staples</a>
                             </li>
                         </ul>
-                    </div>
+                    </div> {% endcomment %}
                 </div>
 
                 <div class="col-xl col-lg-2 col-sm-3">
@@ -123,16 +123,16 @@
                                 <a href="/" class="text-content">Home</a>
                             </li>
                             <li>
-                                <a href="{% url 'web:shop' %}" class="text-content">Shop</a>
+                                <a href="" class="text-content">Shop</a>
                             </li>
                             <li>
-                                <a href="{% url 'web:about_us' %}" class="text-content">About Us</a>
+                                <a href="{% url 'user:about_us' %}" class="text-content">About Us</a>
                             </li>
                             <li>
-                                <a href="{% url 'web:blog_detail' %}" class="text-content">Blog</a>
+                                <a href="{% url 'user:blog_detail' %}" class="text-content">Blog</a>
                             </li>
                             <li>
-                                <a href="{% url 'web:contact_us' %}" class="text-content">Contact Us</a>
+                                <a href="{% url 'user:contact_us' %}" class="text-content">Contact Us</a>
                             </li>
                         </ul>
                     </div>
@@ -146,22 +146,22 @@
                     <div class="footer-contain">
                         <ul>
                             <li>
-                                <a href="{% url 'web:order_success' %}" class="text-content">Your Order</a>
+                                <a href="{% url 'user:order_success' %}" class="text-content">Your Order</a>
                             </li>
                             <li>
-                                <a href="{% url 'web:dashboard' %}" class="text-content">Your Account</a>
+                                <a href="{% url 'user:dashboard' %}" class="text-content">Your Account</a>
                             </li>
                             <li>
-                                <a href="{% url 'web:order_tracking' %}" class="text-content">Track Order</a>
+                                <a href="{% url 'user:order_tracking' %}" class="text-content">Track Order</a>
                             </li>
                             <li>
-                                <a href="{% url 'web:wishlist' %}" class="text-content">Your Wishlist</a>
+                                <a href="{% url 'user:wishlist' 1 %}" class="text-content">Your Wishlist</a>
                             </li>
                             <li>
-                                <a href="{% url 'web:search' %}" class="text-content">Search</a>
+                                <a href="{% url 'user:search' %}" class="text-content">Search</a>
                             </li>
                             <li>
-                                <a href="{% url 'web:faq' %}" class="text-content">FAQ</a>
+                                <a href="{% url 'user:faq' %}" class="text-content">FAQ</a>
                             </li>
                         </ul>
                     </div>

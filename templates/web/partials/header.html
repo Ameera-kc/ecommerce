@@ -112,7 +112,7 @@
                                     </div>
                                 </li>
                                 <li class="right-side">
-                                    <a href="contact-us.html" class="delivery-login-box">
+                                    <a href="{% url 'user:contact_us' %}" class="delivery-login-box">
                                         <div class="delivery-icon">
                                             <i data-feather="phone-call"></i>
                                         </div>
@@ -212,10 +212,6 @@
                                             <li class="product-box-contain">
                                                 <a href="sign-up">Register</a>
                                             </li>
-
-                                            {% comment %} <li class="product-box-contain">
-                                                <a href="forgot">Forgot Password</a>
-                                            </li> {% endcomment %}
                                         </ul>
                                     </div>
                                 </li>
@@ -232,11 +228,6 @@
             <div class="col-12">
                 <div class="header-nav">
                    <div class="header-nav-left">
-                         {% comment %} <button class="dropdown-category">
-                            <i data-feather="align-left"></i>
-                            <span>All Categories</span>
-                        </button>{% endcomment %}
-
                         <div class="category-dropdown">
                             <div class="category-title">
                                 <h5>Categories</h5>
@@ -247,8 +238,9 @@
 
                             <ul class="category-list">
                                 <li class="onhover-category-list">
+                                    
                                     <a href="javascript:void(0)" class="category-name">
-                                        <img src="{% static 'web/images/svg/1/vegetable.svg' %}"
+                                        <img src="{{category.image.url}}"
                                             alt="">
                                         <h6>{{category.category}}</h6>
                                         <i class="fa-solid fa-angle-right"></i>
@@ -257,7 +249,7 @@
                                     <div class="onhover-category-box">
                                         <div class="list-1">
                                             <div class="category-title-box">
-                                                <h5>Organic Vegetables</h5>
+                                                <h5>{{category.get_subcategories.}}</h5>
                                             </div>
                                             <ul>
                                                 <li>

@@ -22,21 +22,21 @@
             </li>
 
             <li>
-                <a href="search.html" class="search-box">
+                <a href="{% url 'user:search' %}" class="search-box">
                     <i class="iconly-Search icli"></i>
                     <span>Search</span>
                 </a>
             </li>
 
             <li>
-                <a href="wishlist.html" class="notifi-wishlist">
+                <a href="{% url 'user:wishlist' 2 %}" class="notifi-wishlist">
                     <i class="iconly-Heart icli"></i>
                     <span>My Wish</span>
                 </a>
             </li>
 
             <li>
-                <a href="cart.html">
+                <a href="{% url 'user:cart' %}">
                     <i class="iconly-Bag-2 icli fly-cate"></i>
                     <span>Cart</span>
                 </a>
@@ -514,7 +514,7 @@
                     <div class="section-b-space">
                         <div class="row m-0">
                             {%for topsaves in topsave%}                          
-                                <div class="col-lg-4 col-md-4 col-sm-6 px-0">                                       
+                                <div class="col-lg-4 col-6 px-0">                                       
                                     <div class="product-box" style="border-right:0px;">
                                         <div class="product-image">
                                             <a href={% url 'user:product' topsaves.id %}>

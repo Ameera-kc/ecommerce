@@ -18074,7 +18074,7 @@ header .offcanvas-backdrop {
     font-weight: 700
 }
 
->>.table:not(:last-child):last-child>* {
+table:not(:last-child):last-child>* {
     border-bottom: none
 }
 

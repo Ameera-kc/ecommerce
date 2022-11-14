@@ -238,40 +238,26 @@
 
                             <ul class="category-list">
                                 <li class="onhover-category-list">
-                                    
-                                    <a href="javascript:void(0)" class="category-name">
+                                    {% for category in categories %}
+                                    <a href="{{category.get_absolute_url}}" class="category-name">
                                         <img src="{{category.image.url}}"
                                             alt="">
                                         <h6>{{category.category}}</h6>
                                         <i class="fa-solid fa-angle-right"></i>
                                     </a>
-
                                     <div class="onhover-category-box">
-                                        <div class="list-1">
                                             <div class="category-title-box">
                                                 <h5>{{category.get_subcategories.}}</h5>
                                             </div>
                                             <ul>
+                                                {% for subcategory in category.get_subcategories%}
                                                 <li>
-                                                    <a href="javascript:void(0)">Specialty</a>
+                                                    <a href="javascript:void(0)">{{subcategory.subcategory}}</a>
                                                 </li>
+                                                {% endfor %}
                                             </ul>
-                                        </div>
-
-                                        <div class="list-2">
-                                            <div class="category-title-box">
-                                                <h5>Fresh Fruit</h5>
-                                            </div>
-                                            <ul>
-                                                <li>
-                                                    <a href="javascript:void(0)">Banana & Papaya</a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:void(0)">Fruit Baskets</a>
-                                                </li>
-                                            </ul>
-                                        </div>
                                     </div>
+                                    {% endfor %}
                                 </li>
                             </ul>
                         </div>

@@ -78,7 +78,7 @@
                         <div class="product-header">
                             <div class="product-image">
                                 <a href="product-left.html">
-                                    <img src="{{products.image.url}}" class="img-fluid blur-up lazyload"
+                                    <img src="{{wished_item.image.url}}" class="img-fluid blur-up lazyload"
                                         alt="">
                                 </a>
 
@@ -91,18 +91,18 @@
                         </div>
                         <div class="product-footer">
                             <div class="product-detail">
-                                <span class="span-name">{{products.subcategory}}</span>
+                                {% comment %} <span class="span-name">{{wished_item.subcategory}}</span> {% endcomment %}
                                 <a href="product-left.html">
-                                    <h5 class="name">{{products.product}}</h5>
+                                    <h5 class="name">{{wished_item.product}}</h5>
                                 </a>
                                 {% comment %} <h6 class="unit mt-1">250 ml</h6> {% endcomment %}
                                 <h5 class="price">
-                                    <span class="theme-color">Rs {{products.price}}</span>
-                                    <del>Rs {{products.offer_price}}</del>
+                                    <span class="theme-color">Rs {{wished_item.price}}</span>
+                                    <del>Rs {{wished_item.offer_price}}</del>
                                 </h5>
 
                                 <div class="add-to-cart-box bg-white mt-2">
-                                    <a href="{%url 'user:cart' products.id %}"><button class="btn btn-add-cart addcart-button">Add to cart
+                                    <a href="{%url 'user:cart' wished_item.id %}"><button class="btn btn-add-cart addcart-button">Add to cart
                                         <i class="fa-solid fa-plus bg-gray"></i></button></a>
                                     {% comment %} <div class="cart_qty qty-box">
                                         <div class="input-group bg-white">

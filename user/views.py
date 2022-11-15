@@ -4,7 +4,7 @@ from .forms import LoginRegister, UserRegistration
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from . models import MainBanner, SubBanners, Product, SubCategory, Category
+from . models import MainBanner, SubBanners, Product, SubCategory, Category, Wishlist, Cart
 
 
 
@@ -51,6 +51,7 @@ def user_register(request):
     return render(request, 'web/sign-up.html', {'login_form': login_form, 'user_form': user_form})
 
 
+
 def index(request):
     mainbanner = MainBanner.objects.last()
     subbanners = SubBanners.objects.last()
@@ -68,6 +69,7 @@ def index(request):
     return render(request, "web/index.html", context)
 
 
+
 def product(request, id):
     products = Product.objects.get(id=id)
     sub = products.subcategory
@@ -76,6 +78,7 @@ def product(request, id):
         "subcategory": sub
     }
     return render(request, "web/product-slider.html", context)
+
 
 
 def shop(request,id):
@@ -88,20 +91,34 @@ def shop(request,id):
     return render(request, "web/shop-left-sidebar.html", context)
 
 
+
 def wishlist(request, id):
-    products = Product.objects.get(id=id)
+    if request.user == None:
+        return redirect('user:login')
+    else:
+        request.user
+        wished_item = Product.objects.get(user=request.user)
+        Wishlist.save(wished_item)
     context = {
-        "products" :products
+        "wished_item" :wished_item
     }
     return render(request, "web/wishlist.html", context)
 
 
+
 def cart(request, id):
-    products = Product.objects.get(id=id)
+    if request.user == None:
+        return redirect('user:login')
+    else:
+        carted_item = Product.objects.get(id=id)
+        Cart.save(carted_item)
     context = {
-         "product" :products
+        "carted_item" :carted_item
     }
     return render(request, "web/cart.html", context)
+
+
+
 
 def about_us(request):
     context = {}

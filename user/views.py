@@ -51,8 +51,6 @@ def user_register(request):
     return render(request, 'web/sign-up.html', {'login_form': login_form, 'user_form': user_form})
 
 
-
-
 def index(request):
     mainbanner = MainBanner.objects.last()
     subbanners = SubBanners.objects.last()
@@ -71,9 +69,12 @@ def index(request):
 
 
 def product(request, id):
-    subcategory = SubCategory.objects.get(id=id)
-    products = Product.objects.filter(id=id)
-    context = {"products": products, "subcategory": subcategory}
+    products = Product.objects.get(id=id)
+    sub = products.subcategory
+    context = {
+        "products": products,
+        "subcategory": sub
+    }
     return render(request, "web/product-slider.html", context)
 
 

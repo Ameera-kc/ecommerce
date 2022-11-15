@@ -56,10 +56,10 @@
                                                     <div class="category-title-box isotop-grid {{category.category}}">  
                                                     </div>
                                                     <ul>
-                                                        {% for category in category.get_subcategories %}
+                                                        {% for subcategory in category.get_subcategories %}
 
                                                         <li>
-                                                            <a href="{{category.get_absolute_url}}">{{category.subcategory }}</a>
+                                                            <a href="{{category.get_url}}">{{subcategory.subcategory }}</a>
                                                         </li>
 
                                                         {% endfor %}    
@@ -67,15 +67,11 @@
                                                 </div>
                                             </div>
                                         </li>
-                                        
-                                        
                                         {% endfor %}
                                     </ul>
-
-
-                                </div>
                                 </div>
                             </div>
+                        </div>
                             {% comment %} end  all categories {% endcomment %}
 
                             <div class="search-box">
@@ -246,16 +242,18 @@
                                         <i class="fa-solid fa-angle-right"></i>
                                     </a>
                                     <div class="onhover-category-box">
+                                        {% for subcategory in category.get_subcategories %}
                                             <div class="category-title-box">
-                                                <h5>{{category.get_subcategories.}}</h5>
+                                                <h5>{{subcategory.subcategory}}</h5>
                                             </div>
                                             <ul>
-                                                {% for subcategory in category.get_subcategories%}
+                                                {% for products in subcategory.get_products %}
                                                 <li>
-                                                    <a href="javascript:void(0)">{{subcategory.subcategory}}</a>
+                                                    <a href="{{subcategory.get_absolute_url}}">{{products.product}}</a>
                                                 </li>
                                                 {% endfor %}
                                             </ul>
+                                        {% endfor %}
                                     </div>
                                     {% endfor %}
                                 </li>

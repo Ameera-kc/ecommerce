@@ -22,7 +22,7 @@ class Customer(models.Model):
 
     
 class Category(models.Model):
-    category = models.CharField(max_length = 200,unique=True)
+    category = models.CharField(max_length = 200, unique=True)
     image = VersatileImageField(upload_to="categories/", null=True)
     
     def get_absolute_url(self):
@@ -34,10 +34,15 @@ class Category(models.Model):
     def __str__(self):
         return self.category
     
+    
 class SubCategory(models.Model):
     subcategory = models.CharField(max_length = 150)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
+    def get_absolute_url(self):
+        return reverse_lazy("user:product", kwargs={"id": self.id})
+
+    
     def get_products(self):
         return Product.objects.filter(subcategory=self) 
     
@@ -49,10 +54,13 @@ class SubCategory(models.Model):
 class Product(models.Model):
     product = models.CharField(max_length = 150)
     image = VersatileImageField(upload_to="products/", null=True)
+    sub_image1 = VersatileImageField(upload_to="products/", null=True)
+    sub_image2 = VersatileImageField(upload_to="products/", null=True)
+    sub_image3 = VersatileImageField(upload_to="products/", null=True)
     subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE)
     price = models.IntegerField()
     offer_price = models.IntegerField(null = True)
-    description = HTMLField()
+    description = models.CharField(max_length = 250)
     is_top_save_today= models.BooleanField(default = False)
     is_best_seller = models.BooleanField(default = False)
         

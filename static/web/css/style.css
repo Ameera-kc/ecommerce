@@ -16620,12 +16620,12 @@ header .offcanvas-backdrop {
     align-items: center;
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
-    justify-content: space-between;
+    justify-content: center;
     position: absolute;
     bottom: -5px;
     background-color: #fff;
     width: 70%;
-    padding: 10px 5px;
+    padding: 10px 0px;
     border-radius: 7px;
     -webkit-box-shadow: 0 0 8px rgba(34, 34, 34, 0.12);
     box-shadow: 0 0 8px rgba(34, 34, 34, 0.12);

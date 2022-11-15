@@ -46,21 +46,20 @@
                                     <ul class="category-list food-menu-filter">
                                        {% for category in categories %}
                                         <li class="onhover-category-list">
-                                            <a href="category.get_absolute_url" class="category-name">
+                                            <a href="{{category.get_absolute_url}}" class="category-name">
                                                 <img src="{{category.image.url}}" alt="">
                                                 <h6>{{category.category}}</h6>
                                                 <i class="fa-solid fa-angle-right"></i>
                                             </a>         
                                             <div class="onhover-category-box w-100 product-items">
                                                 <div class="list-1">
-                                                    <div class="category-title-box isotop-grid {{category.category}}">
-                                                        
+                                                    <div class="category-title-box isotop-grid {{category.category}}">  
                                                     </div>
                                                     <ul>
                                                         {% for category in category.get_subcategories %}
 
                                                         <li>
-                                                            <a href="category.get_absolute_url">{{category.subcategory }}</a>
+                                                            <a href="{{category.get_absolute_url}}">{{category.subcategory }}</a>
                                                         </li>
 
                                                         {% endfor %}    
@@ -213,10 +212,6 @@
                                             <li class="product-box-contain">
                                                 <a href="sign-up">Register</a>
                                             </li>
-
-                                            {% comment %} <li class="product-box-contain">
-                                                <a href="forgot">Forgot Password</a>
-                                            </li> {% endcomment %}
                                         </ul>
                                     </div>
                                 </li>
@@ -233,11 +228,6 @@
             <div class="col-12">
                 <div class="header-nav">
                    <div class="header-nav-left">
-                         {% comment %} <button class="dropdown-category">
-                            <i data-feather="align-left"></i>
-                            <span>All Categories</span>
-                        </button>{% endcomment %}
-
                         <div class="category-dropdown">
                             <div class="category-title">
                                 <h5>Categories</h5>
@@ -248,39 +238,26 @@
 
                             <ul class="category-list">
                                 <li class="onhover-category-list">
-                                    <a href="javascript:void(0)" class="category-name">
-                                        <img src="{% static 'web/images/svg/1/vegetable.svg' %}"
+                                    {% for category in categories %}
+                                    <a href="{{category.get_absolute_url}}" class="category-name">
+                                        <img src="{{category.image.url}}"
                                             alt="">
                                         <h6>{{category.category}}</h6>
                                         <i class="fa-solid fa-angle-right"></i>
                                     </a>
-
                                     <div class="onhover-category-box">
-                                        <div class="list-1">
                                             <div class="category-title-box">
-                                                <h5>Organic Vegetables</h5>
+                                                <h5>{{category.get_subcategories.}}</h5>
                                             </div>
                                             <ul>
+                                                {% for subcategory in category.get_subcategories%}
                                                 <li>
-                                                    <a href="javascript:void(0)">Specialty</a>
+                                                    <a href="javascript:void(0)">{{subcategory.subcategory}}</a>
                                                 </li>
+                                                {% endfor %}
                                             </ul>
-                                        </div>
-
-                                        <div class="list-2">
-                                            <div class="category-title-box">
-                                                <h5>Fresh Fruit</h5>
-                                            </div>
-                                            <ul>
-                                                <li>
-                                                    <a href="javascript:void(0)">Banana & Papaya</a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:void(0)">Fruit Baskets</a>
-                                                </li>
-                                            </ul>
-                                        </div>
                                     </div>
+                                    {% endfor %}
                                 </li>
                             </ul>
                         </div>

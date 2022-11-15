@@ -4,7 +4,7 @@ from .forms import LoginRegister, UserRegistration
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from . models import MainBanner, SubBanners, Product, SubCategory
+from . models import MainBanner, SubBanners, Product, SubCategory, Category
 
 
 
@@ -75,6 +75,14 @@ def product(request, id):
     products = Product.objects.filter(id=id)
     context = {"products": products, "subcategory": subcategory}
     return render(request, "web/product-slider.html", context)
+
+
+def shop(request,id):
+    category = Category.objects.get(id=id)
+    context = {
+        "category":category
+    }
+    return render(request, "web/shop-left-sidebar.html", context)
 
 
 def about_us(request):
@@ -270,10 +278,6 @@ def shop_category(request):
     context = {}
     return render(request, "web/shop-category.html", context)
 
-
-def shop(request):
-    context = {}
-    return render(request, "web/shop-left-sidebar.html", context)
 
 
 def shop_list(request):

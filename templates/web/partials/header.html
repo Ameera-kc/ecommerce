@@ -244,12 +244,12 @@
                                     <div class="onhover-category-box">
                                         {% for subcategory in category.get_subcategories %}
                                             <div class="category-title-box">
-                                                <h5>{{subcategory.subcategory}}</h5>
+                                                <a href="{% url 'user:shop' subcategory.id %}"><h5>{{subcategory.subcategory}}</h5></a>
                                             </div>
                                             <ul>
                                                 {% for products in subcategory.get_products %}
                                                 <li>
-                                                    <a href="{{subcategory.get_absolute_url}}">{{products.product}}</a>
+                                                    <a href="{% url 'user:product' products.id %}">{{products.product}}</a>
                                                 </li>
                                                 {% endfor %}
                                             </ul>

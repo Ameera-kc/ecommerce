@@ -79,9 +79,13 @@ def product(request, id):
 
 
 def shop(request,id):
+    subcategory = SubCategory.objects.get(id=id)
+    products = Product.objects.filter(subcategory=subcategory)
+    print(products)
     category = Category.objects.get(id=id)
     context = {
-        "category":category
+        "category":category,
+        "products":products
     }
     return render(request, "web/shop-left-sidebar.html", context)
 

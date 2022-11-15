@@ -95,10 +95,10 @@ def shop(request,id):
 def wishlist(request, id):
     if request.user == None:
         return redirect('user:login')
-    else:
-        request.user
-        wished_item = Product.objects.get(user=request.user)
-        Wishlist.save(wished_item)
+    # else:
+    #     request.user
+    #     wished_item = Product.objects.get(user=request.user)
+    #     Wishlist.save(wished_item)
     context = {
         "wished_item" :wished_item
     }
@@ -109,9 +109,9 @@ def wishlist(request, id):
 def cart(request, id):
     if request.user == None:
         return redirect('user:login')
-    else:
-        carted_item = Product.objects.get(id=id)
-        Cart.save(carted_item)
+    # else:
+    #     carted_item = Product.objects.get(id=id)
+    #     Cart.save(carted_item)
     context = {
         "carted_item" :carted_item
     }

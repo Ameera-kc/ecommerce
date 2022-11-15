@@ -53,13 +53,12 @@
                                             </a>         
                                             <div class="onhover-category-box w-100 product-items">
                                                 <div class="list-1">
-                                                    <div class="category-title-box isotop-grid {{category.category}}">  
-                                                    </div>
+                                                    
                                                     <ul>
                                                         {% for subcategory in category.get_subcategories %}
 
                                                         <li>
-                                                            <a href="{{category.get_url}}">{{subcategory.subcategory }}</a>
+                                                            <a href="{{subcategory.get_shop_url}}">{{subcategory.subcategory }}</a>
                                                         </li>
 
                                                         {% endfor %}    

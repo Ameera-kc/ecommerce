@@ -42,6 +42,8 @@ class SubCategory(models.Model):
     def get_absolute_url(self):
         return reverse_lazy("user:product", kwargs={"id": self.id})
 
+    def get_shop_url(self):
+        return reverse_lazy("user:shop", kwargs={"id": self.id})
     
     def get_products(self):
         return Product.objects.filter(subcategory=self) 

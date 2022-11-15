@@ -8,7 +8,7 @@
     <div class="mobile-menu d-md-none d-block mobile-cart">
         <ul>
             <li class="active">
-                <a href="index.html">
+                <a href="/">
                     <i class="iconly-Home icli"></i>
                     <span>Home</span>
                 </a>
@@ -22,21 +22,21 @@
             </li>
 
             <li>
-                <a href="search.html" class="search-box">
+                <a href="{% url 'user:search' %}" class="search-box">
                     <i class="iconly-Search icli"></i>
                     <span>Search</span>
                 </a>
             </li>
 
             <li>
-                <a href="wishlist.html" class="notifi-wishlist">
+                <a href="{% url 'user:wishlist' 1 %}" class="notifi-wishlist">
                     <i class="iconly-Heart icli"></i>
                     <span>My Wish</span>
                 </a>
             </li>
 
             <li>
-                <a href="cart.html">
+                <a href="{% url 'user:cart' 1 %}">
                     <i class="iconly-Bag-2 icli fly-cate"></i>
                     <span>Cart</span>
                 </a>
@@ -905,6 +905,7 @@
 
                     <div
                         class="row g-sm-4 g-3 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-2 row-cols-md-3 row-cols-2 product-list-section">
+                        {% if category %}
                         {% for sub in category.get_subcategories %}
                         {% for product in sub.get_products %}
                         <div>
@@ -987,6 +988,89 @@
                         </div>
                         {% endfor %}
                         {% endfor %}
+                        {% else %}
+                        {% for product in subcategory.get_products %}
+                        <div>
+                            <div class="product-box-3 h-100 wow fadeInUp">
+                                <div class="product-header">
+                                    <div class="product-image">
+                                        <a href="{% url 'user:product' product.id %}">
+                                            <img src={{product.image.url}}
+                                                class="img-fluid blur-up lazyload" alt="">
+                                        </a>
+                                        <ul class="product-option">
+                                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
+                                                <a href="javascript:void(0)" data-bs-toggle="modal"
+                                                    data-bs-target="#view">
+                                                    <i data-feather="eye"></i>
+                                                </a>
+                                            </li>
+                                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
+                                                <a href="{% url 'user:wishlist' product.id %}" class="notifi-wishlist">
+                                                    <i data-feather="heart"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="product-footer">
+                                    <div class="product-detail">
+                                        <span class="span-name">Vegetable</span>
+                                        <a href="{% url 'user:product' product.id %}">
+                                            <h5 class="name">{{product.product}}</h5>
+                                        </a>
+                                        <p class="text-content mt-1 mb-2 product-content"></p>
+                                        <div class="product-rating mt-2">
+                                            <ul class="rating">
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                            </ul>
+                                            <span>(4.0)</span>
+                                        </div>
+                                        <h6 class="unit">250 ml</h6>
+                                        <h5 class="price"><span class="theme-color">{{product.price}}</span> <del>{{product.offer_price}}</del>
+                                        </h5>
+                                        <div class="add-to-cart-box bg-white">
+                                            <button class="btn btn-add-cart addcart-button">Add
+                                                {% comment %} <span class="add-icon bg-light-gray">
+                                                    <i class="fa-solid fa-plus"></i>
+                                                </span> {% endcomment %}
+                                            </button>
+                                            {% comment %} <div class="cart_qty qty-box">
+                                                <div class="input-group bg-white">
+                                                    <button type="button" class="qty-left-minus bg-gray"
+                                                        data-type="minus" data-field="">
+                                                        <i class="fa fa-minus" aria-hidden="true"></i>
+                                                    </button>
+                                                    <input class="form-control input-number qty-input" type="text"
+                                                        name="quantity" value="0">
+                                                    <button type="button" class="qty-right-plus bg-gray"
+                                                        data-type="plus" data-field="">
+                                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
+                                            </div> {% endcomment %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                    
                         {% comment %} 
                         <div>
                             <div class="product-box-3 h-100 wow fadeInUp" data-wow-delay="0.05s">

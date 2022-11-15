@@ -29,14 +29,14 @@
             </li>
 
             <li>
-                <a href="{% url 'user:wishlist' 2 %}" class="notifi-wishlist">
+                <a href="{% url 'user:wishlist' 1 %}" class="notifi-wishlist">
                     <i class="iconly-Heart icli"></i>
                     <span>My Wish</span>
                 </a>
             </li>
 
             <li>
-                <a href="{% url 'user:cart' %}">
+                <a href="{% url 'user:cart' 1 %}">
                     <i class="iconly-Bag-2 icli fly-cate"></i>
                     <span>Cart</span>
                 </a>
@@ -189,7 +189,7 @@
     <section class="product-section">
         <div class="container-fluid-lg">
             <div class="row g-sm-4 g-4">
-                <div class="col-xxl-3 col-xl-4 d-xl-block d-none">
+                {% comment %} <div class="col-xxl-3 col-xl-4 d-xl-block d-none">
                     <div class="p-sticky d-none">
                         <div class="category-menu">
                             <h3>Category</h3>
@@ -457,7 +457,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> {% endcomment %}
 
                 <div class="col-xxl-12 col-xl-12">
                     <div class="title title-flex">
@@ -546,29 +546,30 @@
                                                         <del>{{topsaves.price}}</del>
                                             </h5>
                                             <div class="product-rating mt-sm-2 mt-1">
-                                                        <ul class="rating">
-                                                            <li>
-                                                                <i data-feather="star" class="fill"></i>
-                                                            </li>
-                                                            <li>
-                                                                <i data-feather="star" class="fill"></i>
-                                                            </li>
-                                                            <li>
-                                                                <i data-feather="star" class="fill"></i>
-                                                            </li>
-                                                            <li>
-                                                                <i data-feather="star" class="fill"></i>
-                                                            </li>
-                                                            <li>
-                                                                <i data-feather="star"></i>
-                                                            </li>
-                                                        </ul>
+                                                    <ul class="rating">
+                                                        <li>
+                                                            <i data-feather="star" class="fill"></i>
+                                                        </li>
+                                                        <li>
+                                                            <i data-feather="star" class="fill"></i>
+                                                        </li>
+                                                        <li>
+                                                            <i data-feather="star" class="fill"></i>
+                                                        </li>
+                                                        <li>
+                                                            <i data-feather="star" class="fill"></i>
+                                                        </li>
+                                                        <li>
+                                                            <i data-feather="star"></i>
+                                                        </li>
+                                                    </ul>
 
-                                                        <h6 class="theme-color">In Stock</h6>
+                                                    <h6 class="theme-color">In Stock</h6>
                                             </div>
                                             <div class="add-to-cart-box">
-                                                        <button class="btn btn-add-cart">Add To Cart                                                  
-                                                        </button>                                       
+                                                <a href="{% url 'user:cart' 1 %}">
+                                                    <button class="btn btn-add-cart">Add To Cart</button>
+                                                </a>                                      
                                             </div>
                                         </div>
                                     </div>                                        

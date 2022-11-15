@@ -79,16 +79,29 @@ def product(request, id):
 
 
 def shop(request,id):
-    subcategory = SubCategory.objects.get(id=id)
-    products = Product.objects.filter(subcategory=subcategory)
-    print(products)
     category = Category.objects.get(id=id)
+    subcategory = SubCategory.objects.filter(id=id)
     context = {
         "category":category,
-        "products":products
+        "subcategory":subcategory
     }
     return render(request, "web/shop-left-sidebar.html", context)
 
+
+def wishlist(request, id):
+    products = Product.objects.get(id=id)
+    context = {
+        "products" :products
+    }
+    return render(request, "web/wishlist.html", context)
+
+
+def cart(request, id):
+    products = Product.objects.get(id=id)
+    context = {
+         "product" :products
+    }
+    return render(request, "web/cart.html", context)
 
 def about_us(request):
     context = {}
@@ -110,9 +123,6 @@ def blog_list(request):
     return render(request, "web/blog-list.html", context)
 
 
-def cart(request):
-    context = {}
-    return render(request, "web/cart.html", context)
 
 
 def checkout(request):
@@ -308,11 +318,6 @@ def sign_up(request):
 def user_dashboard(request):
     context = {}
     return render(request, "web/user-dashboard.html", context)
-
-
-def wishlist(request, id):
-    context = {}
-    return render(request, "web/wishlist.html", context)
 
 
 def error_404(request):

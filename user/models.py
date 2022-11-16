@@ -2,6 +2,7 @@ from django.db import models
 from versatileimagefield.fields import VersatileImageField
 from tinymce.models import HTMLField
 from django.urls import reverse_lazy
+from django.conf import settings
 from django.contrib.auth.models import (
     AbstractUser,
  )
@@ -54,6 +55,7 @@ class SubCategory(models.Model):
 
     
 class Product(models.Model):
+    # user=models.ForeignKey(Customer, on_delete=models.CASCADE, null=True,default='')
     product = models.CharField(max_length = 150)
     image = VersatileImageField(upload_to="products/", null=True)
     sub_image1 = VersatileImageField(upload_to="products/", null=True)
@@ -80,7 +82,6 @@ class SubBanners(models.Model):
     subbanner2 = VersatileImageField(upload_to="SubBanners/", null=True)
 
 
-    
 
 class HeaderFlash(models.Model):
     address =  models.CharField(max_length = 150)
@@ -88,8 +89,22 @@ class HeaderFlash(models.Model):
     
     def __str__(self):
         return self.address
+
+
+class Cart(models.Model):
+    user = models.ForeignKey(Customer,on_delete=models.CASCADE, null=True,default='')
+    wished_item = models.ForeignKey(Product,on_delete=models.CASCADE)
+    slug = models.CharField(max_length=30,null=True,blank=True)
+    added_date = models.DateTimeField(auto_now_add=True)
+     
+     
+class Wishlist(models.Model):
+    user = models.ForeignKey(Customer,on_delete=models.CASCADE, null=True,default='')
+    wished_item = models.ForeignKey(Product,on_delete=models.CASCADE)
+    slug = models.CharField(max_length=30,null=True,blank=True)
+    added_date = models.DateTimeField(auto_now_add=True)
     
-        
+    
 def get_absolute_url(self):
     return reverse("_detail", kwargs={"pk": self.pk})
 

@@ -36,7 +36,7 @@
             </li>
 
             <li>
-                <a href="{% url 'user:cart' 1 %}">
+                <a href="{% url 'user:viewcart' %}">
                     <i class="iconly-Bag-2 icli fly-cate"></i>
                     <span>Cart</span>
                 </a>
@@ -73,12 +73,14 @@
     <section class="wishlist-section section-b-space">
         <div class="container-fluid-lg">
             <div class="row g-sm-3 g-2">
+                {% for product in wished_items %}
                 <div class="col-xxl-2 col-lg-3 col-md-4 col-6 product-box-contain">
+                    
                     <div class="product-box-3 h-100">
                         <div class="product-header">
                             <div class="product-image">
                                 <a href="product-left.html">
-                                    <img src="{{wished_item.image.url}}" class="img-fluid blur-up lazyload"
+                                    <img src="{{product.product.image.url}}" class="img-fluid blur-up lazyload"
                                         alt="">
                                 </a>
 
@@ -91,19 +93,19 @@
                         </div>
                         <div class="product-footer">
                             <div class="product-detail">
-                                {% comment %} <span class="span-name">{{wished_item.subcategory}}</span> {% endcomment %}
+                                {% comment %} <span class="span-name">{{wished_items.product.subcategory}}</span> {% endcomment %}
                                 <a href="product-left.html">
-                                    <h5 class="name">{{wished_item.product}}</h5>
+                                    <h5 class="name">{{product.product.product}}</h5>
                                 </a>
                                 {% comment %} <h6 class="unit mt-1">250 ml</h6> {% endcomment %}
                                 <h5 class="price">
-                                    <span class="theme-color">Rs {{wished_item.price}}</span>
-                                    <del>Rs {{wished_item.offer_price}}</del>
+                                    <span class="theme-color">Rs {{product.product.price}}</span>
+                                    <del>Rs {{product.product.offer_price}}</del>
                                 </h5>
 
                                 <div class="add-to-cart-box bg-white mt-2">
-                                    <a href="{%url 'user:cart' wished_item.id %}"><button class="btn btn-add-cart addcart-button">Add to cart
-                                        <i class="fa-solid fa-plus bg-gray"></i></button></a>
+                                    {% comment %} <a href="{%url 'user:cart' wished_items.product.id %}"><button class="btn btn-add-cart addcart-button">Add to cart
+                                        <i class="fa-solid fa-plus bg-gray"></i></button></a> {% endcomment %}
                                     {% comment %} <div class="cart_qty qty-box">
                                         <div class="input-group bg-white">
                                             <button type="button" class="qty-left-minus bg-gray" data-type="minus"
@@ -122,8 +124,9 @@
                             </div>
                         </div>
                     </div>
+                  
                 </div>
-
+                {% endfor %}
                 {% comment %}
                 <div class="col-xxl-2 col-lg-3 col-md-4 col-6 product-box-contain">
                     <div class="product-box-3 h-100">

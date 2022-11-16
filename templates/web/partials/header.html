@@ -118,11 +118,21 @@
                                     </a>
                                 </li>
                                 <li class="right-side">
-                                    <a href="wishlist.html" class="btn p-0 position-relative header-wishlist">
+                                    <a href="{%url 'user:viewwishlist' %}" class="btn p-0 position-relative header-wishlist">
                                         <i data-feather="heart"></i>
                                     </a>
                                 </li>
                                 <li class="right-side">
+                                    <a href="{%url 'user:viewcart' %}" class="btn p-0 position-relative header-wishlist">
+                                        <i data-feather="shopping-cart"></i>
+                                    </a>
+                                </li>
+
+
+
+
+
+                                {% comment %} <li class="right-side">
                                     <div class="onhover-dropdown header-badge">
                                         <button type="button" class="btn p-0 position-relative header-wishlist">
                                             <i data-feather="shopping-cart"></i>
@@ -185,7 +195,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </li>
+                                </li> {% endcomment %}
                                 <li class="right-side onhover-dropdown">
                                     <div class="delivery-login-box">
                                         <div class="delivery-icon">

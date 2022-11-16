@@ -162,3 +162,4 @@ VERSATILEIMAGEFIELD_SETTINGS = {
 
 AUTH_USER_MODEL = "user.Login"
 
+# settings.CSRF_FAILURE_VIEW="django.views.csrf.csrf_failure()"

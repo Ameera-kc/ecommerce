@@ -8,7 +8,7 @@ urlpatterns = [
     path("blog-detail", views.blog_detail, name="blog_detail"),
     path("blog-grid", views.blog_grid, name="blog_grid"),
     path("blog-list", views.blog_list, name="blog_list"),
-    path("cart/<int:id>", views.cart, name="cart"),
+    path("cart/<int:id>", views.addtocart, name="cart"),
     path("checkout", views.checkout, name="checkout"),
     path("coming-soon", views.coming_soon, name="coming_soon"),
     path("compare", views.compare, name="compare"),
@@ -51,7 +51,7 @@ urlpatterns = [
     path("shop-top-filter", views.shop_top_filter, name="shop_top_filter"),
     path("sign-up", views.user_register, name="sign_up"),
     path("dashboard", views.user_dashboard, name="dashboard"),
-    path("wishlist/<int:id>", views.wishlist, name="wishlist"),
+    path("wishlist/<int:id>", views.addtowishlist, name="wishlist"),
     path("404", views.error_404, name="error_404"),
     
 ]

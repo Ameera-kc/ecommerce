@@ -4,8 +4,9 @@ from .forms import LoginRegister, UserRegistration
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from . models import MainBanner, SubBanners, Product, SubCategory, Category, Wishlist, Cart
-
+from . models import MainBanner, SubBanners, Product, SubCategory, Category, Wishlist, Cart, Customer
+from django.http.response import JsonResponse
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -90,34 +91,70 @@ def shop(request,id):
     }
     return render(request, "web/shop-left-sidebar.html", context)
 
+@login_required(login_url='login')
+def addtowishlist(request):
+    if request.method == 'POST':
+        if request.customer.is_authenticated:
+            p_id=int(request.POST.get('id'))
+            product=Product.objects.get(product_id=p_id)
+            if(product):
+                if(Wishlist.objects.filter(user=request.Customer.id,product_id=p_id)):
+                    return JsonResponse({'status':"product is already in wishlist"})
+                else:
+                    Wishlist.objects.create(customer=request.customer,product_id=p_id)
+                    return JsonResponse({'status':"Product added successfully"}) 
+            else:
+                return JsonResponse({'status':"No such product found"})
+        else:
+            return JsonResponse({'status':"Login to Continue"})
+    return redirect('/')
 
 
-def wishlist(request, id):
-    if request.user == None:
-        return redirect('user:login')
-    # else:
-    #     request.user
-    #     wished_item = Product.objects.get(user=request.user)
-    #     Wishlist.save(wished_item)
-    context = {
-        "wished_item" :wished_item
-    }
-    return render(request, "web/wishlist.html", context)
+def addtocart(request):
+    if request.method == 'POST':
+        if request.customer.is_authenticated:
+            p_id=int(request.POST.get('id'))
+            product=Product.objects.get(product_id=p_id)
+            if(product):
+                if(Cart.objects.filter(user=request.Customer.id,product_id=p_id)):
+                    return JsonResponse({'status':"product is already in cart"})
+                else:
+                    p_qty=int(request.POST.get('prod_quantity'))
+                    if product.quantity >=p_qty:
+                        Cart.objects.create(customer=request.customer,product_id=p_id,product_qty=p_qty)
+                        return JsonResponse({'status':"Product added successfully"})
+                    else:
+                        return JsonResponse({'status':"only "+str(product.quantity) + "quantity available"})
+            else:
+                return JsonResponse({'status':"No such product found"})
+        else:
+            return JsonResponse({'status':"Login to Continue"})
+    return redirect('/')
+
+# def wishlist(request, id):
+#     if request.user == None:
+#         return redirect('user:login')
+#     else:
+#         request.user
+#         wished_item = Product.objects.get(user=request.user)
+#         Wishlist.save(wished_item)
+#     context = {
+#         "wished_item" :wished_item
+#     }
+#     return render(request, "web/wishlist.html", context)
 
 
 
-def cart(request, id):
-    if request.user == None:
-        return redirect('user:login')
-    # else:
-    #     carted_item = Product.objects.get(id=id)
-    #     Cart.save(carted_item)
-    context = {
-        "carted_item" :carted_item
-    }
-    return render(request, "web/cart.html", context)
-
-
+# def cart(request, id):
+#     if request.user == None:
+#         return redirect('user:login')
+#     else:
+#         carted_item = Product.objects.get(id=id)
+#         Cart.save(carted_item)
+#     context = {
+#         "carted_item" :carted_item
+#     }
+#     return render(request, "web/cart.html", context)
 
 
 def about_us(request):

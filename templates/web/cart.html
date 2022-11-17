@@ -29,14 +29,14 @@
             </li>
 
             <li>
-                <a href="{% url 'user:wishlist' 1 %}" class="notifi-wishlist">
+                <a href="{% url 'user:viewwishlist' %}" class="notifi-wishlist">
                     <i class="iconly-Heart icli"></i>
                     <span>My Wish</span>
                 </a>
             </li>
 
             <li>
-                <a href="{% url 'user:cart' 1 %}">
+                <a href="{% url 'user:viewcart' %}">
                     <i class="iconly-Bag-2 icli fly-cate"></i>
                     <span>Cart</span>
                 </a>
@@ -78,37 +78,38 @@
                         <div class="table-responsive-xl">
                             <table class="table">
                                 <tbody>
-                                    
+                                    {% for item in carted_item %}
                                     <tr class="product-box-contain">
+                                        
                                         <td class="product-detail">
                                             <div class="product border-0">
                                                 <a href="product-left-thumbnail.html" class="product-image">
-                                                    <img src="{{product.image.url}}"
+                                                    <img src="{{item.product.image.url}}"
                                                         class="img-fluid blur-up lazyload" alt="">
                                                 </a>
                                                 <div class="product-detail">
                                                     <ul>
                                                         <li class="name">
-                                                            <a href="product-left-thumbnail.html">{{product.product}}</a>
+                                                            <a href="product-left-thumbnail.html">{{item.product.product}}</a>
                                                         </li>
 
-                                                        {% comment %} <li class="text-content"><span class="text-title">Sold
+                                                        <li class="text-content"><span class="text-title">Sold
                                                                 By:</span> Fresho</li>
 
                                                         <li class="text-content"><span
-                                                                class="text-title">Quantity</span> - 500 g</li> {% endcomment %}
+                                                                class="text-title">Quantity</span> - 500 g</li>
 
                                                         <li>
                                                             <h5 class="text-content d-inline-block">Price :</h5>
-                                                            <span>Rs {{product.price}}</span>
-                                                            <span class="text-content">Rs {{product.offer_price}}</span>
+                                                            <span>Rs {{item.product.price}}</span>
+                                                            <span class="text-content">Rs {{item.product.offer_price}}</span>
                                                         </li>
 
                                                         <li>
                                                             <h5 class="saving theme-color">Saving : Rs 120.68</h5>
                                                         </li>
 
-                                                        {% comment %} <li class="quantity-price-box">
+                                                         <li class="quantity-price-box">
                                                             <div class="cart_qty">
                                                                 <div class="input-group">
                                                                     <button type="button" class="btn qty-left-minus"
@@ -125,7 +126,7 @@
                                                                     </button>
                                                                 </div>
                                                             </div>
-                                                        </li> {% endcomment %}
+                                                        </li> 
 
                                                         <li>
                                                             <h5>Total: Rs 135.10</h5>
@@ -141,7 +142,7 @@
                                             <h6 class="theme-color">You Save : Rs 120.68</h6>
                                         </td>
 
-                                        <td class="quantity">
+                                        {% comment %} <td class="quantity">
                                             <h4 class="table-title text-content">Qty</h4>
                                             <div class="quantity-price">
                                                 <div class="cart_qty">
@@ -170,9 +171,9 @@
                                             <h4 class="table-title text-content">Action</h4>
                                             <a class="save notifi-wishlist" href="javascript:void(0)">Save for later</a>
                                             <a class="remove close_button" href="javascript:void(0)">Remove</a>
-                                        </td>
+                                        </td> {% endcomment %}
                                     </tr>
-
+                                    {% endfor %}
                                     {% comment %} <tr class="product-box-contain">
                                         <td class="product-detail">
                                             <div class="product border-0">

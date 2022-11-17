@@ -29,14 +29,14 @@
             </li>
 
             <li>
-                <a href="{% url 'user:wishlist' 1 %}" class="notifi-wishlist">
+                <a href="{% url 'user:viewwishlist' %}" class="notifi-wishlist">
                     <i class="iconly-Heart icli"></i>
                     <span>My Wish</span>
                 </a>
             </li>
 
             <li>
-                <a href="{% url 'user:cart' 1 %}">
+                <a href="{% url 'user:viewcart' %}">
                     <i class="iconly-Bag-2 icli fly-cate"></i>
                     <span>Cart</span>
                 </a>
@@ -531,8 +531,8 @@
                                                 </li>
                                                 <li data-bs-toggle="tooltip" data-bs-placement="top"
                                                             title="Wishlist">
-                                                    <a href="{% url 'user:wishlist' topsaves.id %}" class="notifi-wishlist">
-                                                                <i data-feather="heart"></i>
+                                                    <a href="{% url 'user:addtowishlist' topsaves.id %}" class="notifi-wishlist">
+                                                        <i data-feather="heart"></i>
                                                     </a>
                                                     </li>
                                             </ul>
@@ -567,7 +567,7 @@
                                                     <h6 class="theme-color">In Stock</h6>
                                             </div>
                                             <div class="add-to-cart-box">
-                                                <a href="{% url 'user:cart' 1 %}">
+                                                <a href="{% url 'user:addtocart' topsaves.id %}">
                                                     <button class="btn btn-add-cart">Add To Cart</button>
                                                 </a>                                      
                                             </div>
@@ -577,11 +577,82 @@
                             {% endfor %}  
                         </div>                                                         
                     </div>
-
+                    {% comment %} <div class="section-b-space">
+                        
+                            {% for topsaves in topsave %}  
+                            <form class="row m-0" method='POST'>
+                                {% csrf_token %}                        
+                                <div class="col-lg-4 col-6 px-0">                                       
+                                    <div class="product-box" style="border-right:0px;">
+                                        <div class="product-image">
+                                            <a href={% url 'user:product' topsaves.id %}>
+                                                <img src="{{topsaves.image.url}}"
+                                                        class="img-fluid blur-up lazyload" alt="">
+                                            </a>
+                                            <ul class="product-option">
+                                                <li data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="View">
+                                                    <a href="javascript:void(0)" data-bs-toggle="modal"
+                                                                data-bs-target="#view">
+                                                        <i data-feather="eye"></i>
+                                                    </a>
+                                                </li>
+                                                <li data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="Wishlist">
+                                                    <button type="submit">
+                                                        <a class="notifi-wishlist">
+                                                        <i data-feather="heart"></i>
+                                                        </a>
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="product-detail">
+                                            <a href={% url 'user:product' topsaves.id %}>
+                                                        <h6 class="name">{{topsaves.product}}</h6>
+                                            </a>
+                                            <h5 class="sold text-content">
+                                                    <span class="theme-color price">Rs {{topsaves.offer_price}}</span>
+                                                        <del>{{topsaves.price}}</del>
+                                            </h5>
+                                            <div class="product-rating mt-sm-2 mt-1">
+                                                    <ul class="rating">
+                                                        <li>
+                                                            <i data-feather="star" class="fill"></i>
+                                                        </li>
+                                                        <li>
+                                                            <i data-feather="star" class="fill"></i>
+                                                        </li>
+                                                        <li>
+                                                            <i data-feather="star" class="fill"></i>
+                                                        </li>
+                                                        <li>
+                                                            <i data-feather="star" class="fill"></i>
+                                                        </li>
+                                                        <li>
+                                                            <i data-feather="star"></i>
+                                                        </li>
+                                                    </ul>
+                                                    {% if topsaves.quantity > 0%}
+                                                    <h6 class="theme-color">In Stock</h6>
+                                                    {% else %}
+                                                    <h6 class="theme-color">Out Of Stock</h6>
+                                                    {% endif %}
+                                            </div>
+                                            <div class="add-to-cart-box">
+                                                <a href="{% url 'user:cart' 1 %}">
+                                                    <button class="btn btn-add-cart">Add To Cart</button>
+                                                </a>                                      
+                                            </div>
+                                        </div>
+                                    </div>                                        
+                                </div>
+                            </form>   
+                            {% endfor %} 
+                                                                              
+                    </div> {% endcomment %}
 
                  
-
-                
 
                     <div class="title d-block d-none">
                         <h2>Food Cupboard</h2>

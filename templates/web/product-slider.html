@@ -22,21 +22,21 @@
             </li>
 
             <li>
-                <a href="search.html" class="search-box">
+                <a href="{% url 'user:search' %}" class="search-box">
                     <i class="iconly-Search icli"></i>
                     <span>Search</span>
                 </a>
             </li>
 
             <li>
-                <a href="wishlist.html" class="notifi-wishlist">
+                <a href="{% url 'user:viewwishlist' %}" class="notifi-wishlist">
                     <i class="iconly-Heart icli"></i>
                     <span>My Wish</span>
                 </a>
             </li>
 
             <li>
-                <a href="{% url 'user:cart' 1 %}">
+                <a href="{% url 'user:viewcart' %}">
                     <i class="iconly-Bag-2 icli fly-cate"></i>
                     <span>Cart</span>
                 </a>
@@ -214,12 +214,12 @@
                                         </div>
                                     </div> {% endcomment %}
 
-                                    <button onclick="location.href = 'cart.html';"
-                                        class="btn btn-md bg-dark cart-button text-white w-50">Add To Cart</button>
+                                    <a href = {% url 'user:addtocart' products.id %}"
+                                        class="btn btn-md bg-dark cart-button text-white w-50">Add To Cart</a>
                                 </div>
 
                                 <div class="buy-box">
-                                    <a href="wishlist.html">
+                                    <a href="{% url 'user:addtowishlist' products.id %}">
                                         <i data-feather="heart"></i>
                                         <span>Add To Wishlist</span>
                                     </a>

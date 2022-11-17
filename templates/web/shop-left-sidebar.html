@@ -29,7 +29,7 @@
             </li>
 
             <li>
-                <a href="{% url 'user:wishlist' 1 %}" class="notifi-wishlist">
+                <a href="{% url 'user:viewwishlist' %}" class="notifi-wishlist">
                     <i class="iconly-Heart icli"></i>
                     <span>My Wish</span>
                 </a>
@@ -924,7 +924,7 @@
                                                 </a>
                                             </li>
                                             <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                                                <a href="{% url 'user:wishlist' product.id %}" class="notifi-wishlist">
+                                                <a href="{% url 'user:addtowishlist' product.id %}" class="notifi-wishlist">
                                                     <i data-feather="heart"></i>
                                                 </a>
                                             </li>

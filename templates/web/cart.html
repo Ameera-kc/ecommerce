@@ -141,6 +141,11 @@
                                             <h5>Rs 135.10 <del class="text-content">Rs 145.68</del></h5>
                                             <h6 class="theme-color">You Save : Rs 120.68</h6>
                                         </td>
+                                        <div class="product-header-top">
+                                            <a href={% url 'user:deletefromcart' item.id %}><button class="btn close_button">
+                                                <i data-feather="x"></i>
+                                            </button>
+                                        </div>
 
                                         {% comment %} <td class="quantity">
                                             <h4 class="table-title text-content">Qty</h4>

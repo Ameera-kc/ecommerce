@@ -197,6 +197,7 @@
                                     </div>
                                 </li> {% endcomment %}
                                 <li class="right-side onhover-dropdown">
+                                    
                                     <div class="delivery-login-box">
                                         <div class="delivery-icon">
                                             <i data-feather="user"></i>
@@ -206,19 +207,29 @@
                                             <h5>My Account</h5>
                                         </div>
                                     </div>
-
+                                   
                                     <div class="onhover-div onhover-div-login">
-                                        <ul class="user-box-name">
+                                         <ul class="user-box-name">
+                                           
+                                            {% if status == 0 %}
                                             <li class="product-box-contain">
                                                 <i></i>
-                                                <a href="login">Log In</a>
+                                                <a href={% url 'user:login' %}>Log In</a>
                                             </li>
-
                                             <li class="product-box-contain">
-                                                <a href="sign-up">Register</a>
+                                                <a href={% url 'user:sign_up' %}>Register</a>
                                             </li>
-                                        </ul>
+                                            {% else %}
+                                            <li class="product-box-contain">
+                                                <a href={% url 'user:sign_up' %}>New Account</a>
+                                            </li>
+                                            <li class="product-box-contain">
+                                                <a href={% url 'user:logout' %}>Logout</a>
+                                            </li>
+                                            {% endif %}
+                                        </ul> 
                                     </div>
+                                   
                                 </li>
                             </ul>
                         </div>

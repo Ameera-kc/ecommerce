@@ -88,6 +88,13 @@
                         </div>
 
                         <div class="input-box">
+                            {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert alert-info">
+                                {{message}}
+                            </div>
+                            {% endfor %}
+                            {% endif %}
                             <form class="row g-4" method="POST">
                                 {% csrf_token %}
                                 <div class="col-12">
@@ -125,7 +132,7 @@
                                 <!-- login section -->
                                 <div class="col-12">
                                     <div class="form-floating theme-form-floating">
-                                        {% comment %} <input type="text" class="form-control" name="username" placeholder="Address" value={{login_form.username}}> {% endcomment %}
+                                        
                                         {{login_form.username}}
                                         <label for="Address">Username</label>
                                     </div>
@@ -133,8 +140,7 @@
 
                                 <div class="col-12">
                                     <div class="form-floating theme-form-floating">
-                                        {% comment %} <input type="password" class="form-control" name="password"
-                                            placeholder="Password" value={{login_form.password1}}> {% endcomment %}
+                                       
                                             {{login_form.password1}}
                                         <label for="password">Password</label>
                                     </div>
@@ -142,14 +148,13 @@
 
                                 <div class="col-12">
                                     <div class="form-floating theme-form-floating">
-                                         {% comment %} <input type="password" class="form-control" name="password2"
-                                            placeholder="Confirm Password" value={{login_form.password2}}>  {% endcomment %}
+                                       
                                              {{login_form.password2}} 
                                             <label for="password2">Confirm Password</label>
                                     </div>
                                 </div>
 
-                                <div class="col-12">
+                                {% comment %} <div class="col-12">
                                     <div class="forgot-box">
                                         <div class="form-check ps-0 m-0 remember-box">
                                             <input class="checkbox_animated check-box" type="checkbox"
@@ -158,7 +163,7 @@
                                                 <span>Terms</span> and <span>Privacy</span></label>
                                         </div>
                                     </div>
-                                </div>
+                                </div> {% endcomment %}
                                
 
                                 <div class="col-12">

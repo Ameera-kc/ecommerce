@@ -101,6 +101,13 @@
             <div class="row">
                 <div class="col-xxl-12 col-xl-12 col-lg-12 wow fadeInUp">
                     <div class="row g-4">
+                        {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert alert-info">
+                                {{message}}
+                            </div>
+                            {% endfor %}
+                            {% endif %}
                         <div class="col-12 wow fadeInUp">
                             <div class="right-box-contain">
                                 <h6 class="offer-top">30% Off</h6>

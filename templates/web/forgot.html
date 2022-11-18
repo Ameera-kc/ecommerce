@@ -58,6 +58,7 @@
                                         <i class="fa fa-2x fa-solid fa-house"></i>
                                     </a>
                                 </li>
+                                
                                 <li class="breadcrumb-item active">Forgot Password</li>
                             </ol>
                         </nav>
@@ -87,19 +88,28 @@
                                 <h4>Forgot your password</h4>
                             </div>
 
+                            {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert alert-info">
+                                {{message}}
+                            </div>
+                            {% endfor %}
+                            {% endif %}
                             <div class="input-box">
-                                <form class="row g-4">
+                                <form class="row g-4" action="" method="POST">
+                                    {% csrf_token %}
                                     <div class="col-12">
                                         <div class="form-floating theme-form-floating log-in-form">
                                             <input type="email" class="form-control" id="email"
-                                                placeholder="Email Address">
+                                                placeholder="Email Address" name="email">
                                             <label for="email">Email Address</label>
                                         </div>
                                     </div>
 
                                     <div class="col-12">
-                                        <button class="btn btn-animation w-100" type="submit">Forgot
-                                            Password</button>
+                                        
+                                        <button class="btn btn-animation w-100" type="submit">Submit</button>
+                                       
                                     </div>
                                 </form>
                             </div>

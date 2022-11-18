@@ -163,3 +163,12 @@ VERSATILEIMAGEFIELD_SETTINGS = {
 AUTH_USER_MODEL = "user.Login"
 
 # settings.CSRF_FAILURE_VIEW="django.views.csrf.csrf_failure()"
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_HOST_USER ='kcameera00@gmail.com'
+EMAIL_HOST_PASSWORD = "cyrlphqqsokdbtga"
+# DEFAULT_FROM_EMAIL = 'Celery <kcameera00@gmail.com>'

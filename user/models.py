@@ -118,6 +118,17 @@ class Wishlist(models.Model):
     # def get_products(self):
     #     return Product.objects.filter(product=self) 
     
+
+
+class ChangePassword(models.Model):
+    user = models.ForeignKey(Customer,on_delete=models.CASCADE, blank=True, null=True)
+    forgot_password_token = models.CharField(max_length=100)
+    created_at = models. DateTimeField(auto_now_add = True)
+    status = models.BooleanField(default=False)
+
+    def _str_(self):
+        return str(self.user)
+ 
     
 def get_absolute_url(self):
     return reverse("_detail", kwargs={"pk": self.pk})

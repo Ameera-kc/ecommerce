@@ -95,6 +95,11 @@ class AddToCart(models.Model):
     user = models.ForeignKey(Customer,on_delete=models.CASCADE, null=True,default='')
     product = models.ForeignKey(Product,on_delete=models.CASCADE)
     added_date = models.DateTimeField(auto_now_add=True)
+    quantity=models.IntegerField(null=False,blank=False)
+    added_date = models.DateTimeField(auto_now_add=True)
+    total = models.IntegerField(null=False,blank=False)
+    # def get_products(self):
+    #     return Product.objects.all() 
 
     def __str__(self):
         return self.product

@@ -2,6 +2,7 @@ from user.models import Category
 from user.models import SubCategory
 from user.models import Product
 from user.models import HeaderFlash
+from user.models import Customer
 
 def main_context(request):
     headerflash = HeaderFlash.objects.last()
@@ -11,7 +12,7 @@ def main_context(request):
     user = request.user
     print(user)
     
-    if request.user.is_authenticated:
+    if Customer.user == request.user:
        
         return {
             "headerflash": headerflash,

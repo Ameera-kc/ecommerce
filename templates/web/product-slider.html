@@ -29,7 +29,7 @@
             </li>
 
             <li>
-                <a href="{% url 'user:viewwishlist' %}" class="notifi-wishlist">
+                <a href="{% url 'user:viewwishlist' %}" >
                     <i class="iconly-Heart icli"></i>
                     <span>My Wish</span>
                 </a>
@@ -821,7 +821,7 @@
                                             </li>
 
                                             <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                                                <a href="wishlist.html" class="notifi-wishlist">
+                                                <a href="wishlist.html">
                                                     <i data-feather="heart"></i>
                                                 </a>
                                             </li>
@@ -859,11 +859,16 @@
                                         <h5 class="price"><span class="theme-color">Rs {{related.price}}</span> <del>Rs {{related.offer_price}}</del>
                                         </h5>
                                         <div class="add-to-cart-box bg-white">
+                                            {% if related.quantity > 0%}
                                             <button class="btn btn-add-cart addcart-button">Add
                                                 <span class="add-icon bg-light-gray">
                                                     <i class="fa-solid fa-plus"></i>
                                                 </span>
                                             </button>
+                                            {% else%}
+                                            <span class=" bg-light-gray">
+                                                Out Of Stock
+                                            </span>
                                             {% comment %} <div class="cart_qty qty-box">
                                                 <div class="input-group bg-white">
                                                     <button type="button" class="qty-left-minus bg-gray"

@@ -75,13 +75,21 @@ class Product(models.Model):
 
 class MainBanner(models.Model):
     bannerbig = VersatileImageField(upload_to="MainBanner/", null=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
+    
 
-
-class SubBanners(models.Model):
+class SubBanners1(models.Model):
     subbanner1 = VersatileImageField(upload_to="SubBanners/", null=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    
+    
+    
+class SubBanners2(models.Model):
     subbanner2 = VersatileImageField(upload_to="SubBanners/", null=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
+    
 
 
 class HeaderFlash(models.Model):
@@ -91,29 +99,10 @@ class HeaderFlash(models.Model):
     def __str__(self):
         return self.address
 
-class AddToCart(models.Model):
-    user = models.ForeignKey(Customer,on_delete=models.CASCADE, null=True,default='')
-    product = models.ForeignKey(Product,on_delete=models.CASCADE)
-    added_date = models.DateTimeField(auto_now_add=True)
-    quantity=models.IntegerField(null=False,blank=False)
-    added_date = models.DateTimeField(auto_now_add=True)
-    total = models.IntegerField(null=False,blank=False)
-    # def get_products(self):
-    #     return Product.objects.all() 
 
-    def __str__(self):
-        return self.product
     
     
-class Cart(models.Model):
-    user = models.ForeignKey(Customer,on_delete=models.CASCADE, null=True,default='')
-    product = models.ForeignKey(Product,on_delete=models.CASCADE)
-    product_qty=models.IntegerField(null=False,blank=False)
-    added_date = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.product
-    
      
 class Wishlist(models.Model):
     user = models.ForeignKey(Customer,on_delete=models.CASCADE, null=True,default='')
@@ -139,4 +128,49 @@ def get_absolute_url(self):
     return reverse("_detail", kwargs={"pk": self.pk})
 
 
+class Coupon(models.Model):
+    coupon_code = models.CharField(max_length=10)
+    is_expired = models.BooleanField(default=False)
+    discount_price = models.IntegerField(default=100)
+    minimum_amount = models.IntegerField(default=5000)
+    
+    def __str__(self):
+        return self.coupon_code
 
+
+class Cart(models.Model):
+    user = models.ForeignKey(Customer,on_delete=models.CASCADE, null=True,default='')
+    product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    coupon = models.ForeignKey(Coupon, on_delete=models.CASCADE, null=True)
+    product_qty=models.IntegerField(null=False,blank=False)
+    added_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.product
+    
+
+class AddToCart(models.Model):
+    user = models.ForeignKey(Customer,on_delete=models.CASCADE, null=True,default='')
+    coupon = models.ForeignKey(Coupon, on_delete=models.CASCADE,null=True,default='')
+    product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    added_date = models.DateTimeField(auto_now_add=True)
+    quantity=models.IntegerField(null=True, default=1 )
+    total = models.IntegerField(null=True)
+    
+   
+    def get_cart_total(self):
+        cart_items=self.cart_items.all()
+        price = []
+        for cart_item in cart_items:
+            price.append(cart_item.product.price)
+        
+        if self.coupon:
+            return sum(price) - self.coupon.discount_price
+        return sum
+    
+    
+    
+
+
+    def __str__(self):
+        return self.product    

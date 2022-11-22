@@ -60,5 +60,7 @@ urlpatterns = [
     path("wishlist",views.viewwishlist,name="viewwishlist"),
     path("404", views.error_404, name="error_404"),
     
-    
+    # cart add ajax
+    path("addquantity/",views.addQuantity, name="addquantity"),
+    path("lessquantity/",views.lessQuantity,name="lessquantity")
 ]

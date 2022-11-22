@@ -4,13 +4,14 @@ from .forms import LoginRegister, UserRegistration
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from . models import MainBanner, SubBanners, Product, SubCategory, Category
-from . models import Wishlist, Cart, Customer, AddToCart, ChangePassword
+from . models import MainBanner, Product, SubCategory, Category, SubBanners1, SubBanners2
+from . models import Wishlist, Cart, Customer, AddToCart, ChangePassword,Coupon
 from django.contrib.auth.decorators import login_required
 from .helper import send_forget_password_mail
 import uuid
 from django.contrib.auth import logout
 from django.db.models import Q
+from django.http import JsonResponse
 # from django.http.response import JsonResponse
 
 # Create your views here.
@@ -123,14 +124,16 @@ def change_password(request,token):
 
 def index(request):
     mainbanner = MainBanner.objects.last()
-    subbanners = SubBanners.objects.last()
+    subbanners1 = SubBanners1.objects.last()
+    subbanners2 = SubBanners2.objects.last()
     topsave = Product.objects.filter(is_top_save_today = True)
     bestseller = Product.objects.filter(is_best_seller = True).count()
     bestseller1 = Product.objects.filter(is_best_seller = True)[::-1]
     bestseller2 = Product.objects.filter(is_best_seller = True)[::-1]
     context = {
         "mainbanner":mainbanner,
-        "subbanner":subbanners,
+        "subbanner1":subbanners1,
+        "subbanner2":subbanners2,
         "topsave":topsave,
         "bestseller1":bestseller1,
         "bestseller2":bestseller2
@@ -165,12 +168,12 @@ def shop(request,id):
 def addtowishlist(request,id):
         
         if request.user.is_authenticated:
-            if (Customer.objects.get(user = request.user)):
+            if Customer.objects.get(user = request.user):
                 print(request.user)
                 product = Product.objects.get(id=id)  
-                if(product):
+                if product:
                     cust = Customer.objects.get(user=request.user)
-                    if(Wishlist.objects.filter(user=cust,product=product)):
+                    if Wishlist.objects.filter(user=cust,product=product):
                     
                         messages.warning(request, "product is already in wishlist...")
                         return redirect('/') 
@@ -194,7 +197,7 @@ def addtowishlist(request,id):
 
 def viewwishlist(request):
     if request.user.is_authenticated:
-        if (Customer.objects.get(user = request.user)):
+        if Customer.objects.get(user = request.user):
      
             my_p = Customer.objects.get(user=request.user)
             wished_item = Wishlist.objects.filter(user=my_p)
@@ -228,19 +231,20 @@ def deletefromwishlist(request,id):
 
 def addtocart(request,id):
     if request.user.is_authenticated:
-        if (Customer.objects.get(user = request.user)):
+        if Customer.objects.get(user = request.user):
             product = Product.objects.get(id=id)
+            price = product.price
         
-            if(product):
+            if product:
             
                 my_p = Customer.objects.get(user=request.user)
-                if(AddToCart.objects.filter(user=my_p,product=product)):
+                if AddToCart.objects.filter(user=my_p,product=product):
             
                     messages.warning(request,"product is already in cart")
                     return redirect('/') 
                 else:  
                     my_p = Customer.objects.get(user=request.user)
-                    AddToCart.objects.create(user=my_p,product=product) 
+                    AddToCart.objects.create(user=my_p,product=product,total=price) 
                     messages.warning(request,"Product added successfully")    
                     return redirect('/') 
             else:
@@ -256,26 +260,47 @@ def addtocart(request,id):
 
 
 def addQuantity(request):
-    quantity = request.GET['quantity']
-    print(quantity)
-    id = request.GET['id']
-    cart_obj = AddToCart.objects.get(id=id)
-    new_quantity = int(quantity) +1 
-    product_total = float(new_quantity) * float(cart_obj.product.price)
-    cart_obj.total = product_total
-    cart_obj.save()
-    AddToCart.objects.filter(id=id).update(quantity=new_quantity, total=product_total)
-    data = {
-        'total':cart_obj.total,
-    }
-    return JsonResponse(data)
+  
+        
+        
+        quantity = request.GET['quantity']
+        print(quantity,"%"*20)
+        
+        my_p = Customer.objects.get(user=request.user)
+        
+        id = request.GET['id']
+        print(id)
+        cart_obj = AddToCart.objects.get(id=id,user=my_p)
+        
+        print("########")
+        
+        new_quantity = int(quantity) +1 
+        product_total = float(new_quantity) * float(cart_obj.product.offer_price)
+        print(cart_obj.product.offer_price)
+        
+        print("*************")
+        
+        cart_obj.total = product_total
+        print(cart_obj.total)
+        
+        
+        cart_obj.save()
+        AddToCart.objects.filter(id=id).update(quantity=new_quantity, total=product_total)
+        print("success")
+        data = {
+            'total':cart_obj.total,
+        }
+        return JsonResponse(data)
 
 def lessQuantity(request):
     quantity = request.GET['quantity']
+    
+    my_p = Customer.objects.get(user=request.user)
+    
     id = request.GET['id']
-    cart_obj = AddToCart.objects.get(id=id)
+    cart_obj = AddToCart.objects.get(id=id,user=my_p)
     new_quantity = int(quantity) - 1
-    product_total = float(new_quantity) * float(cart_obj.product.price)
+    product_total = float(new_quantity) * float(cart_obj.product.offer_price)
     cart_obj.total = product_total
     cart_obj.save()
     AddToCart.objects.filter(id=id).update(quantity=new_quantity, total=product_total)
@@ -288,15 +313,45 @@ def lessQuantity(request):
    
 def viewcart(request):
     if request.user.is_authenticated:
-        if (Customer.objects.get(user = request.user)):
+        if request.user:
+            print(request.user)
             
+            us=Customer.objects.get(user=request.user)
+            cart_obj=AddToCart.objects.filter(user=us)
+            
+            if request.method == 'POST':
+                coupon = request.POST.get('coupon')
+                coupon_obj = Coupon.objects.filter(coupon_code__icontains = coupon)
+                if not coupon_obj.exists():
+                    messages.warning(request,'Invalid Coupon')
+                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                    
+                if cart_obj.coupon[0]:
+                    messages.warning(request,'Coupon already exists')
+                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                
+                if cart_obj.get_cart_total()>coupon_obj[0].minimum_amount[0]:
+                    messages.warning(request,'Amount should be greater than {coupon_obj.minimum_amount}')
+                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                
+                if coupon_obj[0].is_expired[0]:
+                    messages.warning(request,'coupon expired')
+                    return HttpResponseRedirect(request.META.get('HTTP_REFERER')) 
+                    
+                cart_obj.coupon=coupon_obj[0]
+                cart_obj.save()
+                messages.warning(request,'Coupon applied')
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                
             my_p = Customer.objects.get(user=request.user)
             carted_item = AddToCart.objects.filter(user=my_p)
        
             context= {
                 'carted_item':carted_item
             }
-            return render(request,'web/cart.html',context)  
+            return render(request,'web/cart.html',context)     
+            
+                 
         else:
             messages.warning(request,"Login to Continue")
             return redirect('user:login')
@@ -310,16 +365,15 @@ def deletefromcart(request,id):
                   
                     user = Customer.objects.get(user=request.user)                              
                     product = AddToCart.objects.get(user=user,id=id)   
-                    
-                   
                     product.delete()
                     messages.warning(request, "Product removed successfully...") 
                     return redirect('/')   
                 
 
 def checkout(request):
+    # return render(request, "web/checkout.html")
     if request.user.is_authenticated:
-        if (Customer.objects.get(user = request.user)):
+        if Customer.objects.get(user = request.user):
             
         
             my_p = Customer.objects.get(user=request.user)
@@ -488,7 +542,7 @@ def search(request):
     #     prodtemp=Product.objects.filter(subcategory=cat)
     kw=request.GET.get("search")
     if kw:
-        if((Product.objects.filter(Q(product__icontains=kw) or Q(description__icontains=kw)))):
+        if (Product.objects.filter(Q(product__icontains=kw) or Q(description__icontains=kw))):
             results = Product.objects.filter(Q(product__icontains=kw) | Q(description__icontains=kw))
             print(kw)
             print(results)

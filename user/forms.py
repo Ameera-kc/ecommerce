@@ -1,7 +1,7 @@
 from django import forms
 from .models import Login
 from django.forms.widgets import TextInput, EmailInput, Textarea
-from user.models import Customer, Cart
+from user.models import Customer
 from django.contrib.auth.forms import UserCreationForm
 
 

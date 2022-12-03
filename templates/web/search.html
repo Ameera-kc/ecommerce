@@ -10,35 +10,50 @@
         <ul>
             <li class="active">
                 <a href="/">
-                    <i class="iconly-Home icli"></i>
+                    {% comment %} <i class="iconly-Home icli"></i> {% endcomment %}
+                    <span class="material-symbols-outlined">
+                        home
+                        </span>
                     <span>Home</span>
                 </a>
             </li>
 
             <li class="mobile-category">
                 <a href="javascript:void(0)">
-                    <i class="iconly-Category icli js-link"></i>
+                    {% comment %} <i class="iconly-Category icli js-link"></i> {% endcomment %}
+                    <span class="material-symbols-outlined">
+                        category
+                        </span>
                     <span>Category</span>
                 </a>
             </li>
 
             <li>
-                <a href="search.html" class="search-box">
-                    <i class="iconly-Search icli"></i>
+                <a href="{% url 'user:search' %}" class="search-box">
+                    {% comment %} <i class="iconly-Search icli"></i> {% endcomment %}
+                    <span class="material-symbols-outlined">
+                        search
+                        </span>
                     <span>Search</span>
                 </a>
             </li>
 
             <li>
-                <a href="wishlist.html" >
-                    <i class="iconly-Heart icli"></i>
+                <a href="{% url 'user:viewwishlist' %}">
+                    {% comment %} <i class="iconly-Heart icli"></i> {% endcomment %}
+                    <span class="material-symbols-outlined">
+                        favorite
+                        </span>
                     <span>My Wish</span>
                 </a>
             </li>
 
             <li>
-                <a href="cart.html">
-                    <i class="iconly-Bag-2 icli fly-cate"></i>
+                <a href="{% url 'user:viewcart' %}">
+                    {% comment %} <i class="iconly-Bag-2 icli fly-cate"></i> {% endcomment %}
+                    <span class="material-symbols-outlined">
+                        shopping_cart
+                        </span>
                     <span>Cart</span>
                 </a>
             </li>
@@ -53,7 +68,7 @@
                 <div class="col-12">
                     <div class="breadscrumb-contain">
                         <h2>Search</h2>
-                        <nav>
+                        {% comment %} <nav>
                             <ol class="breadcrumb mb-0">
                                 <li class="breadcrumb-item">
                                     <a href="/">
@@ -62,7 +77,7 @@
                                 </li>
                                 <li class="breadcrumb-item active" aria-current="page">Search</li>
                             </ol>
-                        </nav>
+                        </nav> {% endcomment %}
                     </div>
                 </div>
             </div>
@@ -70,7 +85,7 @@
     </section>
     <!-- Breadcrumb Section End -->
 
-    <!-- Search Bar Section Start -->
+    <!-- Search Bar Section Start (in mobile only)-->
     <section class="search-section">
         <div class="container-fluid-lg">
             <div class="row">
@@ -84,13 +99,16 @@
                         </span>
                     </div>
 
+
                     <div class="search-box" d-md-none>
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder=""
-                                aria-label="Example text with button addon">
-                            <button class="btn theme-bg-color text-white m-0" type="button"
-                                id="button-addon1">Search</button>
-                        </div>
+                        <form method="GET" action="{% url 'user:search' %}">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder=""
+                                aria-label="Example text with button addon" aria-describedby="button-addon2" name="search" required>
+                                <button class="btn theme-bg-color text-white m-0"
+                                    id="button-addon2" type="submit">Search</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -189,267 +207,7 @@
                         {% endif %}
 
                         {% endif %} 
-                        {% comment %} <div>
-                            <div class="product-box-3 h-100">
-                                <div class="product-header">
-                                    <div class="product-image">
-                                        <a href="product-left-thumbnail.html">
-                                            <img src="https://themes.pixelstrap.com/fastkart/assets/images/cake/product/2.png"
-                                                class="img-fluid blur-up lazyload" alt="">
-                                        </a>
-
-                                        <ul class="product-option">
-                                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                                                <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                    data-bs-target="#view">
-                                                    <i data-feather="eye"></i>
-                                                </a>
-                                            </li>
-
-                                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                                                <a href="compare.html">
-                                                    <i data-feather="refresh-cw"></i>
-                                                </a>
-                                            </li>
-
-                                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                                                <a href="wishlist.html" class="notifi-wishlist">
-                                                    <i data-feather="heart"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="product-footer">
-                                    <div class="product-detail">
-                                        <span class="span-name">Vegetable</span>
-                                        <a href="product-left-thumbnail.html">
-                                            <h5 class="name">Fresh Bread and Pastry Flour 200 g</h5>
-                                        </a>
-                                        <div class="product-rating mt-2">
-                                            <ul class="rating">
-                                                <li>
-                                                    <i data-feather="star" class="fill"></i>
-                                                </li>
-                                                <li>
-                                                    <i data-feather="star" class="fill"></i>
-                                                </li>
-                                                <li>
-                                                    <i data-feather="star" class="fill"></i>
-                                                </li>
-                                                <li>
-                                                    <i data-feather="star" class="fill"></i>
-                                                </li>
-                                                <li>
-                                                    <i data-feather="star"></i>
-                                                </li>
-                                            </ul>
-                                            <span>(4.0)</span>
-                                        </div>
-                                        <h6 class="unit">250 ml</h6>
-                                        <h5 class="price"><span class="theme-color">$08.02</span> <del>$15.15</del>
-                                        </h5>
-                                        <div class="add-to-cart-box bg-white">
-                                            <button class="btn btn-add-cart addcart-button">Add
-                                                <span class="add-icon bg-light-gray">
-                                                    <i class="fa-solid fa-plus"></i>
-                                                </span>
-                                            </button>
-                                            <div class="cart_qty qty-box">
-                                                <div class="input-group bg-white">
-                                                    <button type="button" class="qty-left-minus bg-gray"
-                                                        data-type="minus" data-field="">
-                                                        <i class="fa fa-minus" aria-hidden="true"></i>
-                                                    </button>
-                                                    <input class="form-control input-number qty-input" type="text"
-                                                        name="quantity" value="0">
-                                                    <button type="button" class="qty-right-plus bg-gray"
-                                                        data-type="plus" data-field="">
-                                                        <i class="fa fa-plus" aria-hidden="true"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="product-box-3 h-100">
-                                <div class="product-header">
-                                    <div class="product-image">
-                                        <a href="product-left-thumbnail.html">
-                                            <img src="https://themes.pixelstrap.com/fastkart/assets/images/cake/product/3.png"
-                                                class="img-fluid blur-up lazyload" alt="">
-                                        </a>
-
-                                        <ul class="product-option">
-                                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                                                <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                    data-bs-target="#view">
-                                                    <i data-feather="eye"></i>
-                                                </a>
-                                            </li>
-
-                                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                                                <a href="compare.html">
-                                                    <i data-feather="refresh-cw"></i>
-                                                </a>
-                                            </li>
-
-                                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                                                <a href="wishlist.html" class="notifi-wishlist">
-                                                    <i data-feather="heart"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <div class="product-footer">
-                                    <div class="product-detail">
-                                        <span class="span-name">Vegetable</span>
-                                        <a href="product-left-thumbnail.html">
-                                            <h5 class="name">Peanut Butter Bite Premium Butter Cookies 600 g</h5>
-                                        </a>
-                                        <div class="product-rating mt-2">
-                                            <ul class="rating">
-                                                <li>
-                                                    <i data-feather="star" class="fill"></i>
-                                                </li>
-                                                <li>
-                                                    <i data-feather="star" class="fill"></i>
-                                                </li>
-                                                <li>
-                                                    <i data-feather="star"></i>
-                                                </li>
-                                                <li>
-                                                    <i data-feather="star"></i>
-                                                </li>
-                                                <li>
-                                                    <i data-feather="star"></i>
-                                                </li>
-                                            </ul>
-                                            <span>(2.4)</span>
-                                        </div>
-                                        <h6 class="unit">350 G</h6>
-                                        <h5 class="price"><span class="theme-color">$04.33</span> <del>$10.36</del>
-                                        </h5>
-                                        <div class="add-to-cart-box bg-white">
-                                            <button class="btn btn-add-cart addcart-button">Add
-                                                <span class="add-icon bg-light-gray">
-                                                    <i class="fa-solid fa-plus"></i>
-                                                </span>
-                                            </button>
-                                            <div class="cart_qty qty-box">
-                                                <div class="input-group bg-white">
-                                                    <button type="button" class="qty-left-minus bg-gray"
-                                                        data-type="minus" data-field="">
-                                                        <i class="fa fa-minus" aria-hidden="true"></i>
-                                                    </button>
-                                                    <input class="form-control input-number qty-input" type="text"
-                                                        name="quantity" value="0">
-                                                    <button type="button" class="qty-right-plus bg-gray"
-                                                        data-type="plus" data-field="">
-                                                        <i class="fa fa-plus" aria-hidden="true"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="product-box-3 h-100">
-                                <div class="product-header">
-                                    <div class="product-image">
-                                        <a href="product-left-thumbnail.html">
-                                            <img src="https://themes.pixelstrap.com/fastkart/assets/images/cake/product/4.png"
-                                                class="img-fluid blur-up lazyload" alt="">
-                                        </a>
-
-                                        <ul class="product-option">
-                                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                                                <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                    data-bs-target="#view">
-                                                    <i data-feather="eye"></i>
-                                                </a>
-                                            </li>
-
-                                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                                                <a href="compare.html">
-                                                    <i data-feather="refresh-cw"></i>
-                                                </a>
-                                            </li>
-
-                                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
-                                                <a href="wishlist.html" class="notifi-wishlist">
-                                                    <i data-feather="heart"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <div class="product-footer">
-                                    <div class="product-detail">
-                                        <span class="span-name">Snacks</span>
-                                        <a href="product-left-thumbnail.html">
-                                            <h5 class="name">SnackAmor Combo Pack of Jowar Stick and Jowar Chips</h5>
-                                        </a>
-                                        <div class="product-rating mt-2">
-                                            <ul class="rating">
-                                                <li>
-                                                    <i data-feather="star" class="fill"></i>
-                                                </li>
-                                                <li>
-                                                    <i data-feather="star" class="fill"></i>
-                                                </li>
-                                                <li>
-                                                    <i data-feather="star" class="fill"></i>
-                                                </li>
-                                                <li>
-                                                    <i data-feather="star" class="fill"></i>
-                                                </li>
-                                                <li>
-                                                    <i data-feather="star" class="fill"></i>
-                                                </li>
-                                            </ul>
-                                            <span>(5.0)</span>
-                                        </div>
-                                        <h6 class="unit">570 G</h6>
-                                        <h5 class="price"><span class="theme-color">$12.52</span> <del>$13.62</del>
-                                        </h5>
-                                        <div class="add-to-cart-box bg-white">
-                                            <button class="btn btn-add-cart addcart-button">Add
-                                                <span class="add-icon bg-light-gray">
-                                                    <i class="fa-solid fa-plus"></i>
-                                                </span>
-                                            </button>
-                                            <div class="cart_qty qty-box">
-                                                <div class="input-group bg-white">
-                                                    <button type="button" class="qty-left-minus bg-gray"
-                                                        data-type="minus" data-field="">
-                                                        <i class="fa fa-minus" aria-hidden="true"></i>
-                                                    </button>
-                                                    <input class="form-control input-number qty-input" type="text"
-                                                        name="quantity" value="0">
-                                                    <button type="button" class="qty-right-plus bg-gray"
-                                                        data-type="plus" data-field="">
-                                                        <i class="fa fa-plus" aria-hidden="true"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                       {% endcomment %}
+                       
                     </div>
                 </div>
             </div>
@@ -759,51 +517,6 @@
 
     <!-- Tap to top start -->
     <div class="theme-option">
-        <!-- <div class="setting-box">
-            <button class="btn setting-button">
-                <i class="fa-solid fa-gear"></i>
-            </button>
-
-            <div class="theme-setting-2">
-                <div class="theme-box">
-                    <ul>
-                        <li>
-                            <div class="setting-name">
-                                <h4>Color</h4>
-                            </div>
-                            <div class="theme-setting-button color-picker">
-                                <form class="form-control">
-                                    <label for="colorPick" class="form-label mb-0">Theme Color</label>
-                                    <input type="color" class="form-control form-control-color" id="colorPick"
-                                        value="#0da487" title="Choose your color">
-                                </form>
-                            </div>
-                        </li>
-
-                        <li>
-                            <div class="setting-name">
-                                <h4>Dark</h4>
-                            </div>
-                            <div class="theme-setting-button">
-                                <button class="btn btn-2 outline" id="darkButton">Dark</button>
-                                <button class="btn btn-2 unline" id="lightButton">Light</button>
-                            </div>
-                        </li>
-
-                        <li>
-                            <div class="setting-name">
-                                <h4>RTL</h4>
-                            </div>
-                            <div class="theme-setting-button rtl">
-                                <button class="btn btn-2 rtl-unline">LTR</button>
-                                <button class="btn btn-2 rtl-outline">RTL</button>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div> -->
-
         <div class="back-to-top">
             <a id="back-to-top" href="#">
                 <i class="fas fa-chevron-up"></i>

@@ -60,7 +60,7 @@
                     <div class="footer-logo">
                         <div class="theme-logo">
                             <a href="/">
-                                <img src="{% static 'web/images/images/logo-01.png' %}"
+                                <img src="{% static 'web/images/images/my furniture.png' %}"
                                     class="blur-up lazyload" alt="">
                             </a>
                         </div>
@@ -72,11 +72,16 @@
                             <ul class="address">
                                 <li>
                                     <i data-feather="home"></i>
-                                    <a href="javascript:void(0)">1418 Riverwood Drive, CA 96052, US</a>
+                                    <a href="javascript:void(0)">Near Calicut International Airport</a>
+                                    
+                                </li>
+                                <li>
+                                    <h5>+917356978603</h5>
                                 </li>
                                 <li>
                                     <i data-feather="mail"></i>
-                                    <a href="javascript:void(0)">support@fastkart.com</a>
+                                    {% comment %} <a href=gedexo.com>info@gedexo.com</a> {% endcomment %}
+                                    <a href="mailto:info@gedexo.com" target="_blank" rel="noreferrer" class="ml-2">info@gedexo.com</a>
                                 </li>
                             </ul>
                         </div>
@@ -123,17 +128,18 @@
                                 <a href="/" class="text-content">Home</a>
                             </li>
                             <li>
+                                <a href="{% url 'user:search' %}" class="text-content">Search</a>
+                            </li>
+                            {% comment %} <li>
                                 <a href="{% url 'user:shop' 0 %}" class="text-content">Shop</a>
                             </li>
                             <li>
                                 <a href="{% url 'user:about_us' %}" class="text-content">About Us</a>
                             </li>
-                            <li>
-                                <a href="{% url 'user:blog_detail' %}" class="text-content">Blog</a>
-                            </li>
+                           
                             <li>
                                 <a href="{% url 'user:contact_us' %}" class="text-content">Contact Us</a>
-                            </li>
+                            </li> {% endcomment %}
                         </ul>
                     </div>
                 </div>
@@ -145,7 +151,7 @@
 
                     <div class="footer-contain">
                         <ul>
-                            <li>
+                            {% comment %} <li>
                                 <a href="{% url 'user:order_success' %}" class="text-content">Your Order</a>
                             </li>
                             <li>
@@ -153,16 +159,17 @@
                             </li>
                             <li>
                                 <a href="{% url 'user:order_tracking' %}" class="text-content">Track Order</a>
-                            </li>
+                            </li> {% endcomment %}
                             <li>
                                 <a href="{% url 'user:viewwishlist' %}" class="text-content">Your Wishlist</a>
                             </li>
+                            
                             <li>
-                                <a href="{% url 'user:search' %}" class="text-content">Search</a>
+                                <a href="{% url 'user:viewcart' %}" class="text-content">Your Cart</a>
                             </li>
-                            <li>
+                            {% comment %} <li>
                                 <a href="{% url 'user:faq' %}" class="text-content">FAQ</a>
-                            </li>
+                            </li> {% endcomment %}
                         </ul>
                     </div>
                 </div>
@@ -178,8 +185,8 @@
                                 <div class="footer-number">
                                     <i data-feather="phone"></i>
                                     <div class="contact-number">
-                                        <h6 class="text-content">Hotline 24/7 :</h6>
-                                        <h5>+91 888 104 2340</h5>
+                                        <h6 class="text-content">Near Calicut International Airport</h6>
+                                        <h5>+917356978603</h5>
                                     </div>
                                 </div>
                             </li>
@@ -189,7 +196,7 @@
                                     <i data-feather="mail"></i>
                                     <div class="contact-number">
                                         <h6 class="text-content">Email Address :</h6>
-                                        <h5>fastkart@hotmail.com</h5>
+                                        <h5>info@gedexo.com</h5>
                                     </div>
                                 </div>
                             </li>
@@ -219,7 +226,7 @@
 
         <div class="sub-footer section-small-space">
             <div class="reserve">
-                <h6 class="text-content">©2022 Fastkart All rights reserved</h6>
+                <h6 class="text-content">©2022 Gedexo Technologies LLP All rights reserved</h6>
             </div>
 
             <div class="payment">

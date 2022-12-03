@@ -1,5 +1,5 @@
 .theme-color-1 {
-    --theme-color: #d99f46;
+    --theme-color: #2b211f !important;
     --theme-color-rgb: 217, 159, 70
 }
 
@@ -14,9 +14,9 @@
 }
 
 :root {
-    --theme-color: #0da487;
+    --theme-color: #2b211f;
     --theme-color-rgb: 13, 164, 135;
-    --theme-color1: #0e947a;
+    --theme-color1: #2b211f;
     --theme-color1-rgb: 14, 148, 122;
     --theme-color2: linear-gradient(90.56deg, var(--theme-color1) 8.46%, var(--theme-color) 62.97%)
 }
@@ -787,9 +787,9 @@
     -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
     position: relative;
-    background: #ff6b6b;
-    background: -webkit-gradient(linear, left top, right top, from(#ff6b6b), to(#ff4f4f));
-    background: linear-gradient(90deg, #ff6b6b 0%, #ff4f4f 100%);
+    background: #8B4513;
+    background: -webkit-gradient(linear, left top, right top, from(#8B4513), to(#181818));
+    background: linear-gradient(90deg, #8B4513 0%, #181818 100%);
     border: none;
     z-index: 0
 }
@@ -808,9 +808,9 @@
     left: 0;
     z-index: -1;
     border-radius: 5px;
-    background: #ff4f4f;
-    background: -webkit-gradient(linear, left top, right top, from(#ff4f4f), to(#ff6b6b));
-    background: linear-gradient(90deg, #ff4f4f 0%, #ff6b6b 100%);
+    background: #8B4513;
+    background: -webkit-gradient(linear, left top, right top, from(#8B4513), to(#181818));
+    background: linear-gradient(90deg, #8B4513 0%, #181818 100%);
     -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease
 }
@@ -7849,7 +7849,7 @@ header .top-nav .navbar-top .middle-box .search-box .input-group .form-control:f
 }
 
 header .top-nav .navbar-top .middle-box .search-box .input-group button {
-    background-color: #ffa53b;
+    background-color: #2b211f;
     color: #fff;
     padding: 14px 20px;
     border-radius: 5px;
@@ -15371,7 +15371,7 @@ header .offcanvas-backdrop {
     align-items: center;
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
-    /* justify-content: space-between; */
+    justify-content: space-between; 
     position: absolute;
     bottom: -5px;
     background-color: #fff;
@@ -15393,8 +15393,9 @@ header .offcanvas-backdrop {
 }
 
 .product-box .product-image .product-option li {
-    position: relative;
-    width: 33.33%
+    position: unset;
+    /* position: relative; */
+    /* width: 33.33% */
 }
 
 .product-box .product-image .product-option li a {
@@ -15404,7 +15405,10 @@ header .offcanvas-backdrop {
 .product-box .product-image .product-option li a .feather {
     width: 17px;
     height: auto;
-    color: #4a5568
+    color: #4a5568;
+/* extra */
+    margin-left:-33px;
+    margin-right:49px;
 }
 
 .product-box .product-image .product-option li+li:after {

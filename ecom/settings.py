@@ -26,7 +26,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-DEBUG = config("DEBUG", default=False, cast=bool)
+# DEBUG = config("DEBUG", default=False, cast=bool)
 
 ALLOWED_HOSTS = ["*"]
 
@@ -172,3 +172,7 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER ='kcameera00@gmail.com'
 EMAIL_HOST_PASSWORD = "cyrlphqqsokdbtga"
 # DEFAULT_FROM_EMAIL = 'Celery <kcameera00@gmail.com>'
+
+
+RAZORPAY_API_KEY = 'rzp_test_gmilUW5MZmHsEK'
+RAZORPAY_API_SECRET_KEY = 'z7rD3fi8O6rS8vsVMRvmbGkW'

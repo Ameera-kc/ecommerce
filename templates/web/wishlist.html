@@ -9,35 +9,50 @@
         <ul>
             <li class="active">
                 <a href="/">
-                    <i class="iconly-Home icli"></i>
+                    {% comment %} <i class="iconly-Home icli"></i> {% endcomment %}
+                    <span class="material-symbols-outlined">
+                        home
+                        </span>
                     <span>Home</span>
                 </a>
             </li>
 
             <li class="mobile-category">
                 <a href="javascript:void(0)">
-                    <i class="iconly-Category icli js-link"></i>
+                    {% comment %} <i class="iconly-Category icli js-link"></i> {% endcomment %}
+                    <span class="material-symbols-outlined">
+                        category
+                        </span>
                     <span>Category</span>
                 </a>
             </li>
 
             <li>
                 <a href="{% url 'user:search' %}" class="search-box">
-                    <i class="iconly-Search icli"></i>
+                    {% comment %} <i class="iconly-Search icli"></i> {% endcomment %}
+                    <span class="material-symbols-outlined">
+                        search
+                        </span>
                     <span>Search</span>
                 </a>
             </li>
 
             <li>
                 <a href="{% url 'user:viewwishlist' %}">
-                    <i class="iconly-Heart icli"></i>
+                    {% comment %} <i class="iconly-Heart icli"></i> {% endcomment %}
+                    <span class="material-symbols-outlined">
+                        favorite
+                        </span>
                     <span>My Wish</span>
                 </a>
             </li>
 
             <li>
                 <a href="{% url 'user:viewcart' %}">
-                    <i class="iconly-Bag-2 icli fly-cate"></i>
+                    {% comment %} <i class="iconly-Bag-2 icli fly-cate"></i> {% endcomment %}
+                    <span class="material-symbols-outlined">
+                        shopping_cart
+                        </span>
                     <span>Cart</span>
                 </a>
             </li>
@@ -52,7 +67,7 @@
                 <div class="col-12">
                     <div class="breadscrumb-contain">
                         <h2>Wishlist</h2>
-                        <nav>
+                        {% comment %} <nav>
                             <ol class="breadcrumb mb-0">
                                 <li class="breadcrumb-item">
                                     <a href="/">
@@ -61,7 +76,7 @@
                                 </li>
                                 <li class="breadcrumb-item active" aria-current="page">Wishlist</li>
                             </ol>
-                        </nav>
+                        </nav> {% endcomment %}
                     </div>
                 </div>
             </div>

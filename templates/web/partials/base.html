@@ -10,8 +10,8 @@
     <meta name="description" content="Fastkart">
     <meta name="keywords" content="Fastkart">
     <meta name="author" content="Fastkart">
-    <link rel="icon" href="{% static 'web/images/favicon/1.png' %}" type="image/x-icon">
-    <title>On-demand last-mile delivery</title>
+    <link rel="icon" href="{% static 'web/images_new/furniture-favicon.jpeg' %}" type="image/x-icon">
+    <title>My Furniture</title>
 
     <!-- Google font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,7 +24,8 @@
     <link
         href="//fonts.googleapis.com/css2.css?family=Public+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
         rel="stylesheet">
-
+    {% comment %} google font icons {% endcomment %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <!-- bootstrap css -->
     <link id="rtl-link" rel="stylesheet" type="text/css" href="{% static 'web/css/vendors/bootstrap.css' %}">
 
@@ -69,6 +70,8 @@
     {% include 'web/partials/header.html' %}
 
     {% block content %}
+
+    
 
     {% endblock %}
 
@@ -151,7 +154,7 @@
                                     </li>
                                 </ul>
 
-                                <div class="select-size">
+                                {% comment %} <div class="select-size">
                                     <h4>Cake Size :</h4>
                                     <select class="form-select select-form-size">
                                         <option selected>Select Size</option>
@@ -161,15 +164,15 @@
                                         <option value="red">Red Roses</option>
                                         <option value="pink">With Pink Roses</option>
                                     </select>
-                                </div>
+                                </div> {% endcomment %}
 
                                 <div class="modal-button">
-                                    <button onclick="location.href = 'cart.html';"
+                                    <button onclick=""
                                         class="btn btn-md add-cart-button icon">Add
                                         To Cart</button>
-                                    <button onclick="location.href = 'product-left.html';"
+                                    {% comment %} <button onclick="location.href = 'product-left.html';"
                                         class="btn theme-bg-color view-button icon text-white fw-bold btn-md">
-                                        View More Details</button>
+                                        View More Details</button> {% endcomment %}
                                 </div>
                             </div>
                         </div>

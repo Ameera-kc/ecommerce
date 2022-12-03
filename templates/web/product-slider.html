@@ -9,35 +9,50 @@
         <ul>
             <li class="active">
                 <a href="/">
-                    <i class="iconly-Home icli"></i>
+                    {% comment %} <i class="iconly-Home icli"></i> {% endcomment %}
+                    <span class="material-symbols-outlined">
+                        home
+                        </span>
                     <span>Home</span>
                 </a>
             </li>
 
             <li class="mobile-category">
                 <a href="javascript:void(0)">
-                    <i class="iconly-Category icli js-link"></i>
+                    {% comment %} <i class="iconly-Category icli js-link"></i> {% endcomment %}
+                    <span class="material-symbols-outlined">
+                        category
+                        </span>
                     <span>Category</span>
                 </a>
             </li>
 
             <li>
                 <a href="{% url 'user:search' %}" class="search-box">
-                    <i class="iconly-Search icli"></i>
+                    {% comment %} <i class="iconly-Search icli"></i> {% endcomment %}
+                    <span class="material-symbols-outlined">
+                        search
+                        </span>
                     <span>Search</span>
                 </a>
             </li>
 
             <li>
-                <a href="{% url 'user:viewwishlist' %}" >
-                    <i class="iconly-Heart icli"></i>
+                <a href="{% url 'user:viewwishlist' %}">
+                    {% comment %} <i class="iconly-Heart icli"></i> {% endcomment %}
+                    <span class="material-symbols-outlined">
+                        favorite
+                        </span>
                     <span>My Wish</span>
                 </a>
             </li>
 
             <li>
                 <a href="{% url 'user:viewcart' %}">
-                    <i class="iconly-Bag-2 icli fly-cate"></i>
+                    {% comment %} <i class="iconly-Bag-2 icli fly-cate"></i> {% endcomment %}
+                    <span class="material-symbols-outlined">
+                        shopping_cart
+                        </span>
                     <span>Cart</span>
                 </a>
             </li>
@@ -52,7 +67,7 @@
                 <div class="col-12">
                     <div class="breadscrumb-contain">
                         <h2>{{products.product}}</h2>
-                        <nav>
+                        {% comment %} <nav>
                             <ol class="breadcrumb mb-0">
                                 <li class="breadcrumb-item">
                                     <a href="/">
@@ -62,7 +77,7 @@
 
                                 <li class="breadcrumb-item active">{{products.product}}</li>
                             </ol>
-                        </nav>
+                        </nav> {% endcomment %}
                     </div>
                 </div>
             </div>
@@ -75,20 +90,50 @@
         <div class="container-fluid-lg">
             <div class="row">
                 <div class="col-12">
-                    <div class="slider-3-product product-wrapper">    
+                    <div class="slider-3-product product-wrapper"> 
+                        {% if products.sub_image1 %}
+                        <div>
+                            <div class="product-slider-image">
+                                <img src="{{products.sub_image1.url}}"
+                                    alt="{{products.get_subimages.product}}" class="img-fluid blur-up lazyload"> 
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if products.sub_image2 %}
+                       
+                        <div>
+                            <div class="product-slider-image">
+                                <img src="{{products.sub_image2.url}}"
+                                    alt="{{products.get_subimages.product}}" class="img-fluid blur-up lazyload"> 
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if products.sub_image3 %}
+                       
+                        <div>
+                            <div class="product-slider-image">
+                                <img src="{{products.sub_image3.url}}"
+                                    alt="{{products.get_subimages.product}}" class="img-fluid blur-up lazyload"> 
+                            </div>
+                        </div>
+                        
                         <div>
                             <div class="product-slider-image">
                                 <img src="{{products.image.url}}"
                                     alt="{{products.product}}" class="img-fluid blur-up lazyload"> 
                             </div>
                         </div>
-                        {% comment %} <div>
+                       
+                        {% else %}
+                        <div>
                             <div class="product-slider-image">
-                                <img src="https://themes.pixelstrap.com/fastkart/assets/images/product/category/2.jpg"
-                                    alt="" class="img-fluid blur-up lazyload">
+                                <img src="{{products.image.url}}"
+                                    alt="{{products.product}}" class="img-fluid blur-up lazyload"> 
                             </div>
-                        </div>{% endcomment %}
-                    </div>
+                        </div>
+                        {% endif %}
+
+                    
                 </div>
             </div>
         </div>
@@ -110,10 +155,11 @@
                             {% endif %}
                         <div class="col-12 wow fadeInUp">
                             <div class="right-box-contain">
-                                <h6 class="offer-top">30% Off</h6>
+                                
+                                <h6 class="offer-top">{{percentage|floatformat:2}}% Off</h6>
                                 <h2 class="name">{{products.product}}</h2>
                                 <div class="price-rating">
-                                    <h3 class="theme-color price">Rs {{products.price}}<del class="text-content">Rs {{products.offer_price}}</del> 
+                                    <h3 class="theme-color price">Rs {{products.offer_price}}<del class="text-content">Rs {{products.price}}</del> 
                                         {% comment %} <span class="offer theme-color">(8% off)</span></h3> {% endcomment %}
                                     <div class="product-rating custom-rate">
                                         <ul class="rating">
@@ -136,7 +182,6 @@
                                         {% comment %} <span class="review">23 Customer Review</span> {% endcomment %}
                                     </div>
                                 </div>
-
                                 <div class="procuct-contain">
                                     <p>{{products.description}}
                                     </p>
@@ -307,7 +352,7 @@
                                             aria-selected="false">Additional info</button>
                                     </li>
 
-                                    <li class="nav-item" role="presentation">
+                                    {% comment %} <li class="nav-item" role="presentation">
                                         <button class="nav-link" id="care-tab" data-bs-toggle="tab"
                                             data-bs-target="#care" type="button" role="tab" aria-controls="care"
                                             aria-selected="false">Care Instuctions</button>
@@ -317,7 +362,7 @@
                                         <button class="nav-link" id="review-tab" data-bs-toggle="tab"
                                             data-bs-target="#review" type="button" role="tab" aria-controls="review"
                                             aria-selected="false">Review</button>
-                                    </li>
+                                    </li> {% endcomment %}
                                 </ul>
 
                                 <div class="tab-content custom-tab" id="myTabContent">
@@ -333,7 +378,7 @@
                                                     danish cake cupcake. Sweet roll candy chocolate toffee jelly sweet
                                                     roll halvah brownie topping. Marshmallow powder candy sesame snaps
                                                     jelly beans candy canes marshmallow gingerbread pie.</p>
-                                            </div> {% endcomment %}
+                                            </div>
 
                                             <div class="nav-desh">
                                                 <div class="desh-title">
@@ -351,7 +396,7 @@
                                                     massa tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada
                                                     proin libero nunc consequat interdum varius sit amet mattis
                                                     vulputate enim nulla aliquet porttitor lacus luctus accumsan.</p>
-                                            </div>
+                                            </div> {% endcomment %}
 
                                             <div class="banner-contain nav-desh">
                                                 <img src="{% static 'web/images_new/Banner5-01.jpg' %}"
@@ -429,7 +474,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="tab-pane fade" id="care" role="tabpanel" aria-labelledby="care-tab">
+                                    {% comment %} <div class="tab-pane fade" id="care" role="tabpanel" aria-labelledby="care-tab">
                                         <div class="information-box">
                                             <ul>
                                                 <li>Store cream cakes in a refrigerator. Fondant cakes should be
@@ -777,7 +822,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> {% endcomment %}
                                 </div>
                             </div>
                         </div>
@@ -856,33 +901,29 @@
                                             <span>(5.0)</span>
                                         </div>
                                         {% comment %} <h6 class="unit">500 G</h6> {% endcomment %}
-                                        <h5 class="price"><span class="theme-color">Rs {{related.price}}</span> <del>Rs {{related.offer_price}}</del>
+                                        {% if related.offer_price %}
+                                        <h5 class="price"><span class="theme-color">Rs {{related.offer_price}}</span> <del>Rs {{related.price}}</del>
+                                        {% else %}
+                                        <h5 class="price"><span class="theme-color">Rs {{related.price}}</span>
+                                        {% endif %}
                                         </h5>
                                         <div class="add-to-cart-box bg-white">
-                                            {% if related.quantity > 0%}
-                                            <button class="btn btn-add-cart addcart-button">Add
+                                            {% if related.quantity > 0 %}
+
+                                            <a href={% url "user:addtocart" related.id %}> 
+                                                <button class="btn btn-add-cart addcart-button">Add to cart
                                                 <span class="add-icon bg-light-gray">
                                                     <i class="fa-solid fa-plus"></i>
                                                 </span>
-                                            </button>
+                                                </button>
+                                            </a>
                                             {% else%}
+                                            <button class="btn btn-add-cart addcart-button">
                                             <span class=" bg-light-gray">
                                                 Out Of Stock
                                             </span>
-                                            {% comment %} <div class="cart_qty qty-box">
-                                                <div class="input-group bg-white">
-                                                    <button type="button" class="qty-left-minus bg-gray"
-                                                        data-type="minus" data-field="">
-                                                        <i class="fa fa-minus" aria-hidden="true"></i>
-                                                    </button>
-                                                    <input class="form-control input-number qty-input" type="text"
-                                                        name="quantity" value="0">
-                                                    <button type="button" class="qty-right-plus bg-gray"
-                                                        data-type="plus" data-field="">
-                                                        <i class="fa fa-plus" aria-hidden="true"></i>
-                                                    </button>
-                                                </div>
-                                            </div> {% endcomment %}
+                                            </button>
+                                           
                                             {% endif %}
                                         </div>
                                     </div>

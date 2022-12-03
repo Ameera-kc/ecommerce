@@ -10,8 +10,8 @@
     <meta name="description" content="Fastkart">
     <meta name="keywords" content="Fastkart">
     <meta name="author" content="Fastkart">
-    <link rel="icon" href="{% static 'web/images/favicon/1.png' %}" type="image/x-icon">
-    <title>On-demand last-mile delivery</title>
+    <link rel="icon" href="{% static 'web/images_new/furniture-favicon.jpeg' %}" type="image/x-icon">
+    <title>my-furniture</title>
 
     <!-- Google font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,6 +50,9 @@
 
     <!-- Template css -->
     <link id="color-link" rel="stylesheet" type="text/css" href="{% static 'web/css/style.css' %}">
+
+    {% comment %} google font icons {% endcomment %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 </head>
 
 <body class="theme-color-1">
@@ -69,6 +72,8 @@
     {% include 'web/partials/header.html' %}
 
     {% block content %}
+
+    
 
     {% endblock %}
 

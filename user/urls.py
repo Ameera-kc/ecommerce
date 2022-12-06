@@ -40,4 +40,8 @@ urlpatterns = [
     # payment
     path("payment/", views.order_payment, name="payment"),
     path("order_success/", views.callback, name="order_success"),
+    
+    # rating
+    path("productrating/<int:id>", views.productrating, name="productrating"),
+    
 ]

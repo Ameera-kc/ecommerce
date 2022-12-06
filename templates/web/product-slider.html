@@ -3,6 +3,33 @@
 {% load static %}
 
 {% block content %}
+<style>
+
+    .wrapper {
+        display: inline-block;
+      }
+      .wrapper * {
+        float: right;
+      }
+      input {
+        display: none;
+      }
+      label {
+        font-size: 150px;
+        {% comment %} width: 26px;
+        height: 50px; {% endcomment %}
+      }
+      
+      input:checked ~ label {
+        color: red;
+      }
+
+
+    </style>
+
+
+
+
 
     <!-- mobile fix menu start -->
     <div class="mobile-menu d-md-none d-block mobile-cart">
@@ -163,21 +190,18 @@
                                         {% comment %} <span class="offer theme-color">(8% off)</span></h3> {% endcomment %}
                                     <div class="product-rating custom-rate">
                                         <ul class="rating">
+                                            {% for star in stars %}
                                             <li>
                                                 <i data-feather="star" class="fill"></i>
                                             </li>
-                                            <li>
-                                                <i data-feather="star" class="fill"></i>
-                                            </li>
-                                            <li>
-                                                <i data-feather="star" class="fill"></i>
-                                            </li>
-                                            <li>
-                                                <i data-feather="star" class="fill"></i>
-                                            </li>
+                                            {% endfor %}
+                                            {% if nostar %}
+                                            {% for star in nostar %}
                                             <li>
                                                 <i data-feather="star"></i>
                                             </li>
+                                            {% endfor %}
+                                            {% endif %}
                                         </ul>
                                         {% comment %} <span class="review">23 Customer Review</span> {% endcomment %}
                                     </div>
@@ -356,13 +380,13 @@
                                         <button class="nav-link" id="care-tab" data-bs-toggle="tab"
                                             data-bs-target="#care" type="button" role="tab" aria-controls="care"
                                             aria-selected="false">Care Instuctions</button>
-                                    </li>
+                                    </li> {% endcomment %}
 
                                     <li class="nav-item" role="presentation">
                                         <button class="nav-link" id="review-tab" data-bs-toggle="tab"
                                             data-bs-target="#review" type="button" role="tab" aria-controls="review"
                                             aria-selected="false">Review</button>
-                                    </li> {% endcomment %}
+                                    </li>
                                 </ul>
 
                                 <div class="tab-content custom-tab" id="myTabContent">
@@ -474,7 +498,7 @@
                                         </div>
                                     </div>
 
-                                    {% comment %} <div class="tab-pane fade" id="care" role="tabpanel" aria-labelledby="care-tab">
+                                     {% comment %}<div class="tab-pane fade" id="care" role="tabpanel" aria-labelledby="care-tab">
                                         <div class="information-box">
                                             <ul>
                                                 <li>Store cream cakes in a refrigerator. Fondant cakes should be
@@ -496,7 +520,7 @@
                                                 <li>Enjoy your cake!</li>
                                             </ul>
                                         </div>
-                                    </div>
+                                    </div> {% endcomment %}
 
                                     <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
                                         <div class="review-box">
@@ -600,9 +624,10 @@
                                                     </div>
 
                                                     <div class="row g-4">
+                                                        <form method="GET" action="/productrating/{{products.id}}">
                                                         <div class="col-md-6">
                                                             <div class="form-floating theme-form-floating">
-                                                                <input type="text" class="form-control" id="name"
+                                                                <input type="text" class="form-control" id="name" name="name"
                                                                     placeholder="Name">
                                                                 <label for="name">Your Name</label>
                                                             </div>
@@ -610,40 +635,72 @@
 
                                                         <div class="col-md-6">
                                                             <div class="form-floating theme-form-floating">
-                                                                <input type="email" class="form-control" id="email"
+                                                                <input type="email" class="form-control" id="email" name="email"
                                                                     placeholder="Email Address">
                                                                 <label for="email">Email Address</label>
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-6">
-                                                            <div class="form-floating theme-form-floating">
-                                                                <input type="url" class="form-control" id="website"
-                                                                    placeholder="Website">
-                                                                <label for="website">Website</label>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-6">
-                                                            <div class="form-floating theme-form-floating">
-                                                                <input type="url" class="form-control" id="review1"
-                                                                    placeholder="Give your review a title">
-                                                                <label for="review1">Review Title</label>
-                                                            </div>
-                                                        </div>
+                                                        
+                                                        
 
                                                         <div class="col-12">
                                                             <div class="form-floating theme-form-floating">
                                                                 <textarea class="form-control"
                                                                     placeholder="Leave a comment here"
-                                                                    id="floatingTextarea2"
+                                                                    id="floatingTextarea2" name="review"
                                                                     style="height: 150px"></textarea>
                                                                 <label for="floatingTextarea2">Write Your
                                                                     Comment</label>
                                                             </div>
                                                         </div>
+
+                                                        <div class="col-12">
+                                                            <div class="form-floating theme-form-floating">
+                                                                <form method="GET" action="/productrating/{{products.id}}">
+                                                                    <div class="wrapper">
+                                                                        <input type="radio" id="r1" name="rg1" value=1>
+                                                                        <label for="r1">&#10038;</label>
+                                                                        <input type="radio" id="r2" name="rg1" value=2>
+                                                                        <label for="r2">&#10038;</label>
+                                                                        <input type="radio" id="r3" name="rg1" value=3>
+                                                                        <label for="r3">&#10038;</label>
+                                                                        <input type="radio" id="r4" name="rg1" value=4>
+                                                                        <label for="r4">&#10038;</label>
+                                                                        <input type="radio" id="r5" name="rg1" value=5>
+                                                                        <label for="r5">&#10038;</label>
+                                                                    </div>
+                                                                        <button class="btn-apply" type="submit">Apply</button>
+                                                                </form>
+                                                                <p id="demo"></p>
+                                                            </div>
+                                                        </div>
+                                                    </form>
                                                     </div>
                                                 </div>
+                                                {% comment %} rating {% endcomment %}
+
+
+{% comment %} <div class="wrapper">
+    <form method="GET" action="{% url 'user:rating' %}">
+    <input type="radio" id="r1" name="rg1">
+    <label for="r1">&#10038;</label>
+    <input type="radio" id="r2" name="rg1">
+    <label for="r2">&#10038;</label>
+    <input type="radio" id="r3" name="rg1">
+    <label for="r3">&#10038;</label>
+    <input type="radio" id="r4" name="rg1">
+    <label for="r4">&#10038;</label>
+    <input type="radio" id="r5" name="rg1">
+    <label for="r5">&#10038;</label>
+    </form>
+</div> {% endcomment %}
+
+
+
+
+    
+{% comment %} end rating  {% endcomment %}
 
                                                 <div class="col-12">
                                                     <div class="review-title">
@@ -822,7 +879,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> {% endcomment %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -939,11 +996,6 @@
     <!-- Releted Product Section End -->
 
     <!-- Footer Section Start -->
- 
-
- 
-
-   
 
     <!-- Add to cart Modal Start -->
     <div class="add-cart-box">
@@ -1072,5 +1124,62 @@
 <!-- O'2014], Mon, 07 Nov 2022 10:09:38 GMT -->
 
 </html>
+{% comment %} 
+<script>
+    let elements = document.getElementsByName("rg1");
+    document.getElementById("demo").innerHTML = elements;
+</script> {% endcomment %}
+<script>
+$(".rg1 a").on('click', function(e){
+	let value = $(this).data('value');
+   $.ajax({
+      url: "some_url",
+      type: 'POST',
+      data: {'rating': value},
+      success: function (d){
+       // some processing
+      }
+   })
+});
+
+</script>
+
+
+
+{% comment %} <script>
+    const form1 = document.getElementById("my-form-1");
+const outputDisplay1 = document.getElementById("form-data-display-1");
+
+const form2 = document.getElementById("my-form-2");
+const outputDisplay2 = document.getElementById("form-data-display-2");
+
+const noDataWarning = "No data selected";
+
+const onSubmit = ({ formElem, displayElem }) => (event) => {
+  event.preventDefault();
+  const data = Array.from(new FormData(formElem));
+  const serializedData = data
+    .map(([fieldName, value]) => `${fieldName} = ${value}`)
+    .join("\n");
+  displayElem.insertAdjacentText(
+    "beforeend",
+    !!data.length ? serializedData + "\n" : noDataWarning + "\n"
+  );
+};
+
+form1.addEventListener(
+  "submit",
+  onSubmit({ formElem: form1, displayElem: outputDisplay1 })
+);
+
+form2.addEventListener(
+  "submit",
+  onSubmit({ formElem: form2, displayElem: outputDisplay2 })
+); {% endcomment %}
+
+
+    
+
+</script>
 
 {% endblock %}

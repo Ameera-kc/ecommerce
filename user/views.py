@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from user.models import MainBanner, Product, SubCategory, Category, SubBanners1, SubBanners2,Wishlist, Customer, AddToCart, ChangePassword, Order, CashonDeliveyOrders
-from user.models import Coupon, CouponUsed
+from user.models import Coupon, CouponUsed, NoStock, OrderTracking, Rating, CustomerProductRating
 from django.contrib.auth.decorators import login_required
 from .helper import send_forget_password_mail
 import uuid
@@ -109,13 +109,25 @@ def index(request):
 
 def product(request, id):
     products = Product.objects.get(id=id)
+    stars=Rating.objects.get(id=id)
+    print(stars)
+    print(stars.rating)
+    if stars.rating:
+        
+        print(stars.rating)
+        
+        
+        nostar=(stars.rating)-5
+        print(nostar)
     if products.offer_price:
             percentage=((products.price-products.offer_price)/products.price)*100
             sub = products.subcategory
             context = {
             "products": products,
             "subcategory": sub,
-            "percentage":percentage
+            "percentage":percentage,
+            "stars":stars,
+            "nostar":nostar
             }
             return render(request, "web/product-slider.html", context)
     else:
@@ -197,8 +209,7 @@ def deletefromwishlist(request,id):
                     product.delete()
                     messages.warning(request, "Product removed successfully...") 
                     return redirect('/')   
-                    # return JsonResponse({'status':"Product added successfully"}) 
-              
+                    # return JsonResponse({'status':"Product added successfully"})              
 def addtocart(request,id):
     if request.user.is_authenticated:
         if Customer.objects.get(user = request.user):
@@ -312,18 +323,29 @@ def checkout(request):
             carted_item = AddToCart.objects.filter(user=my_p)
             # sub_total = AddToCart.objects.filter(user__user=(request.user)).aggregate(Sum('total'))
             if CouponUsed.objects.filter(user = my_p):
+                
                 print("coupon")
                 sub_total = AddToCart.objects.filter(user__user=(request.user)).aggregate(Sum('total'))
-                coupon = CouponUsed.objects.filter(user = my_p ).last()
-                c = coupon.coupon_code
-                c_amount = c.discount_price
-                print(c_amount)
+                coupon = CouponUsed.objects.filter(user = my_p).last()
+                print("hi")
+                print(coupon)
+                print("hlo")
+                if coupon.used_time == 1:
+                    print("used_time",coupon.used_time)
+                    c_amount = 0
+                else:
+                    print(coupon)
+                    c = coupon.coupon_code
+                    c_amount = c.discount_price
+                    print(c_amount)
                 sub_total = sub_total['total__sum']
                 total = sub_total - c_amount
+                print(total)
                 context= {
-                    'carted_item':carted_item,
-                    'sub_total':total,
+                        'carted_item':carted_item,
+                        'sub_total':total,
                 }
+                return render(request,'web/checkout.html',context)
             else:
                 print("no coupon")
                 sub_total = AddToCart.objects.filter(user__user=(request.user)).aggregate(Sum('total'))
@@ -331,7 +353,7 @@ def checkout(request):
                     'carted_item':carted_item,
                     'sub_total':sub_total,
                 }
-            return render(request,'web/checkout.html',context)  
+                return render(request,'web/checkout.html',context)  
         else:
             messages.warning(request,"Login to Continue")
             return redirect('user:login')
@@ -339,12 +361,50 @@ def checkout(request):
             messages.warning(request,"Login to Continue")
             return redirect('user:login') 
 
-
+# coupon 
+def couponApplied(request):
+    code=request.GET.get("code")
+    customer = Customer.objects.get(user=request.user)
+   
+    if Coupon.objects.filter(coupon_code = code):
+        exist = CouponUsed.objects.filter(coupon_code__coupon_code = code, user = customer).exists()
+        if exist:
+            coupon = CouponUsed.objects.get(coupon_code__coupon_code = code, user = customer)
+            print(coupon.user)
+            print(coupon.used_time)
+            if coupon.used_time == 1:
+                messages.error(request,'coupon is used once')
+                return redirect('user:viewcart') 
+        else:
+            code_obj = Coupon.objects.get(coupon_code=code)
+            if code_obj.is_expired:
+                messages.error(request,'coupon expired')
+                return redirect('user:viewcart')
+            else:
+                numberofused = 1
+                CouponUsed.objects.create(user = customer, coupon_code = code_obj, used_time = numberofused)
+                messages.warning(request,'coupon is applied')
+                return redirect('user:viewcart')
+    else:
+        messages.error(request,"Coupon doesn't exist")
+        return redirect('user:viewcart')
+    
+# payment
 from .constants import PaymentStatus
 from django.views.decorators.csrf import csrf_exempt
 import json
 
 def order_payment(request):
+    my_p = Customer.objects.get(user=request.user)
+    carted_item = AddToCart.objects.filter(user=my_p)
+    for item in carted_item:
+        productobj = Product.objects.get(product = item)
+        productobj.quantity=productobj.quantity-item.quantity
+        Product.objects.filter(product = item).update(quantity=productobj.quantity)
+        if productobj.quantity <= 3:
+            nostock = NoStock.objects.create(product=productobj)
+            nostock.save()
+    
     if request.method == "POST":
         name = request.POST.get("name")
         amount = request.POST.get("amount")
@@ -352,7 +412,6 @@ def order_payment(request):
         address = request.POST.get("address")
         contact = request.POST.get("contact")
         landmark = request.POST.get("landmark")
-        
         client = razorpay.Client(auth=(RAZORPAY_API_KEY,RAZORPAY_API_SECRET_KEY))
         razorpay_order = client.order.create(
             {"amount": int(amount) * 100, "currency": "INR", "payment_capture": "1"}
@@ -371,7 +430,6 @@ def order_payment(request):
             },
         )
     return render(request, "request,'web/checkout.html',context")
-
 
 @csrf_exempt
 def callback(request):
@@ -404,7 +462,6 @@ def callback(request):
         order.status = PaymentStatus.FAILURE
         order.save()
         return render(request, "web/order-success.html", context={"status": order.status})
-
 
 def order_success2(request):
     if request.method == "POST":
@@ -442,7 +499,12 @@ def contact_us(request):
     return render(request, "web/contact-us.html", context)
 
 def order_tracking(request):
-    context = {}
+    my_p = Customer.objects.get(customer_name=request.user)
+    orderTracking = OrderTracking.objects.filter(user=my_p).last()
+    print("order")
+    print(orderTracking.orderPlaced)
+    print("order")
+    context = {"orderTracking":orderTracking}
     return render(request, "web/order-tracking.html", context)
 
 def search(request):
@@ -482,35 +544,56 @@ def error_404(request):
     context = {}
     return render(request, "web/404.html", context)
 
-# coupon 
-def couponApplied(request):
-    code=request.GET.get("code")
-    customer = Customer.objects.get(user=request.user)
-   
-    if Coupon.objects.filter(coupon_code = code):
-        exist = CouponUsed.objects.filter(coupon_code__coupon_code = code, user = customer).exists()
-        if exist:
-            messages.error(request,'coupon is used once')
-            return redirect('user:viewcart') 
-        else:
-            code_obj = Coupon.objects.get(coupon_code=code)
-            if code_obj.is_expired:
-                messages.error(request,'coupon expired')
-                return redirect('user:viewcart')
-            else:
-                CouponUsed.objects.create(user = customer, coupon_code = code_obj)
-                messages.warning(request,'coupon is applied')
-                return redirect('user:viewcart')
+def productrating(request,id):
+    print(id)
+    user=Customer.objects.get(user=request.user)
+    code=request.GET.get("rg1")
+    print("code",code)
+    star=0
+    if code == 5:
+        star=1
+        print("star",star)
+    elif code == 4:
+        star=2
+        print("star",star)
+    elif code == 3:
+        star=3
+        print("star",star)
+    elif code == 2:
+        star=4
+        print("star",star)
+    elif code == 1:
+        star=5
+        print("star",star)
     else:
-        messages.error(request,"Coupon doesn't exist")
-        return redirect('user:viewcart')
+        star=0
+        print("star",star)
+       
+    name=Product.objects.get(id=id)
+    customrating=CustomerProductRating.objects.create(user=user,product=name,rating=star)
+    customrating.save()
+    rates=CustomerProductRating.objects.filter(product=name).aggregate(Sum('rating'))
+    print(rates['rating__sum'])
+    rate = rates['rating__sum']
+    if rate == None:
+        rate=0
+    count=CustomerProductRating.objects.filter(product=name).count()
+    print(count)
+    if count == 0:
+        print("count 0 ")
+        rating=Rating.objects.create(product=name,rating=rate)
+        rating.save()
+        return redirect('user:product',id)
+    else:
+        print("count")
+        c=count*5
+        rates=rate/c
+        rates=rates*10
+        print(rates)
+        rating=Rating.objects.create(product=name,rating=rates)
+        rating.save()
+        print(name)
+        return redirect('user:product',id)
     
-    
-    
-    # code = request.POST.get("code")
-    # print(code)
    
-    # code_obj = Coupon.objects.get(coupon_code)
-    # if code_obj.is_expired:
-    #     messages.warning('coupon expired') 
-        
+    

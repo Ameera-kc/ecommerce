@@ -151,22 +151,18 @@
                                 <div class="table-responsive">
                                     <table class="table">
                                         <tbody>
-                                            
                                             {% for item in carted_item %}
                                             <tr class="product-box-contain">
-                                        
                                                 <td class="product-detail">
                                                     <div class="product border-0">
                                                         <a href="{% url 'user:shop' item.product.id %}" class="product-image">
-                                                            <img src="{{item.product.image.url}}"
-                                                                class="img-fluid blur-up lazyload" alt="">
+                                                            <img src="{{item.product.image.url}}"class="img-fluid blur-up lazyload" alt="">
                                                         </a>
                                                         <div class="product-detail">
                                                             <ul>
                                                                 <li class="name">
                                                                     <a href="{% url 'user:shop' item.product.id %}">{{item.product.product}}</a>
                                                                 </li>
-                                                               
                                                                 <li>
                                                                     <h5 class="text-content d-inline-block">Price :</h5>
                                                                     <span>Rs {{item.product.offer_price}}</span>
@@ -181,47 +177,33 @@
                                                     <h4 class="table-title text-content">Qty</h4>
                                                     <h5>{{item.quantity}}</h5>
                                                 </td>
-                                                
-        
                                                 <td class="subtotal">
-                                                    <h4 class="table-title text-content" >Total</h4>
+                                                    <h4 class="table-title text-content">Total</h4>
                                                     <h5>{{item.total}}</h5>
                                                 </td>
-        
                                             </tr>
-
-                                            {% endfor %}
-                                            <tr>
-                                                <ul>
-                                                    <li>
-                                                       
-                                                    </li>
-                    
-                                                </ul>
-                                            </tr>
-
-                                     
-                                           
+                                            {% endfor %}                                           
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                             
-
                             <div class="button-group">
                                 <ul class="button-group-list">
                                     <li>
                                         <button onclick="location.href = '/';"
-                                            class="btn btn-light shopping-button text-dark"><i
-                                                class="fa-solid fa-arrow-left-long ms-0"></i>Continue Shopping</button>
+                                            class="btn btn-light shopping-button text-dark">
+                                            <i class="fa-solid fa-arrow-left-long ms-0"></i>Continue Shopping
+                                        </button>
                                     </li>
                                     <li>
                                         <h4 class="text-danger">Subtotal:</h4>
+                                        {% if sub_total.total__sum %}
                                         <h4 class="price">{{sub_total.total__sum}}</h4>
-
+                                        {% else %}
+                                        <h4 class="price">{{sub_total}}</h4>
+                                        {% endif %}
                                     </li>
-                                    
-
                                     {% comment %} <li>
                                         <button class="btn btn-animation proceed-btn">Continue Delivery Address</button>
                                     </li> {% endcomment %}
@@ -753,33 +735,37 @@
 
                                                                         <div class="mb-3">
                                                                           <label for="exampleInputEmail1" class="form-label">Name</label>
-                                                                          <input type="name" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                                                          <input type="name" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
                                                                         </div>
 
                                                                         <div class="mb-3">
                                                                           <label for="exampleInputPassword1" class="form-label">Amount</label>
+                                                                          {% if sub_total.total__sum %}
                                                                           <input type="number" name="amount" class="form-control" id="exampleInputPassword1" value={{sub_total.total__sum}} readonly>
+                                                                          {% else %}
+                                                                          <input type="number" name="amount" class="form-control" id="exampleInputPassword1" value={{sub_total}} readonly>
+                                                                          {% endif %}
                                                                         </div>
                                                                                                                                     
                                                                         <div class="mb-3">
                                                                             <label for="email">Email Address</label>
-                                                                            <input type="email" name="email" class="form-control" placeholder="Enter Email Address">
+                                                                            <input type="email" name="email" class="form-control" placeholder="Enter Email Address" required>
                                                                         </div>   
 
                                                                         <div class="mb-3">
                                                                             <label for="number">Contact Number</label>
-                                                                            <input type="number" name="contact" class="form-control" placeholder="Enter Contact Number">
+                                                                            <input type="number" name="contact" class="form-control" placeholder="Enter Contact Number" required>
                                                                         </div>
 
                                                                         <div class="mb-3">
                                                                             <label for="address">Enter Delivery Address</label>
                                                                             <textarea class="form-control" name="address" placeholder="Enter Delivery Address" id="address"
-                                                                                style="height: 100px"></textarea>
+                                                                                style="height: 100px" required></textarea>
                                                                         </div>
                                                                     
                                                                         <div class="mb-3">
                                                                             <label for="landmark">Land Mark</label>
-                                                                            <input type="text" class="form-control" id="landmark" name="landmark" placeholder="Enter Land Mark">  
+                                                                            <input type="text" class="form-control" id="landmark" name="landmark" placeholder="Enter Land Mark" required>  
                                                                         </div>
 
                                                                         <div>
@@ -860,38 +846,41 @@
 
                                                                         <div class="mb-3">
                                                                           <label for="exampleInputEmail1" class="form-label">Name</label>
-                                                                          <input type="name" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                                                          <input type="name" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
                                                                         </div>
 
                                                                         <div class="mb-3">
                                                                           <label for="exampleInputPassword1" class="form-label">Amount</label>
+                                                                          {% if sub_total.total__sum %}
                                                                           <input type="number" name="amount" class="form-control" id="exampleInputPassword1" value={{sub_total.total__sum}} readonly>
+                                                                          {% else %}
+                                                                          <input type="number" name="amount" class="form-control" id="exampleInputPassword1" value={{sub_total}} readonly>
+                                                                          {% endif %}
                                                                         </div>
 
                                                                         <div class="mb-3">
                                                                             <label for="number">Contact Number</label>
-                                                                            <input type="number" name="contact" class="form-control" placeholder="Enter Contact Number">
+                                                                            <input type="number" name="contact" class="form-control" placeholder="Enter Contact Number" required>
                                                                         </div>
                                                                    
                                                                         <div class="mb-3">
                                                                             <label for="email">Email Address</label>
-                                                                            <input type="email" name="email" class="form-control" placeholder="Enter Email Address">
+                                                                            <input type="email" name="email" class="form-control" placeholder="Enter Email Address" required>
                                                                         </div>
                                                 
                                                                         <div class="mb-3">
                                                                             <label for="address">Enter Delivery Address</label>
                                                                             <textarea class="form-control" name="address" placeholder="Enter Delivery Address" id="address"
-                                                                                style="height: 100px"></textarea>
+                                                                                style="height: 100px" required></textarea>
                                                                         </div>
                                                                     
                                                                         <div class="mb-3">
                                                                             <label for="landmark">Land Mark</label>
-                                                                            <input type="text" class="form-control" id="landmark" name="landmark" placeholder="Enter Land Mark">  
+                                                                            <input type="text" class="form-control" id="landmark" name="landmark" placeholder="Enter Land Mark" required>  
                                                                         </div>
 
                                                                         <div>
                                                                         <button type="submit" class="btn btn-animation">Done</button></a>
-                                                                        
                                                                         </div>                                                       
                                                                         
                                                                     </div>

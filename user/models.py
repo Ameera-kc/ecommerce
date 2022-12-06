@@ -59,7 +59,7 @@ class SubCategory(models.Model):
     
     def __str__(self):
         return self.subcategory
-       
+    
 
     
 class Product(models.Model):
@@ -149,33 +149,11 @@ class Coupon(models.Model):
 class CouponUsed(models.Model):
     user = models.ForeignKey(Customer,on_delete=models.CASCADE, blank=True, null=True)
     coupon_code = models.ForeignKey(Coupon,on_delete=models.CASCADE, blank=True, null=True)
-    
-   
-# class Cart(models.Model):
-#     user = models.ForeignKey(Customer,on_delete=models.CASCADE, null=True,default='')
-#     is_paid = models.BooleanField(default = False)
-    
-    
-    
-#     def get_cart_total(self):
-#         cart_items=self.cart_item.all()
-#         price = []
-#         for cart_item in cart_items:
-#             price.append(cart_item.product.price)
-            
-        
-#         if self.coupon:
-#             return sum(price) - self.coupon.discount_price
-#         return sum
-
-#     def __str__(self):
-#         return self.is_paid
-
+    used_time = models.IntegerField(blank=True, null=True)
 
 
 class AddToCart(models.Model):
     user = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True, blank = True)
-    # coupon = models.ForeignKey(Coupon, on_delete=models.CASCADE,null=True)
     product = models.ForeignKey(Product,on_delete=models.CASCADE)
     added_date = models.DateTimeField(auto_now_add=True)
     quantity=models.IntegerField(null=True, default=1 )
@@ -184,7 +162,7 @@ class AddToCart(models.Model):
     
     
     def __str__(self):
-        return self.user    
+        return self.product.product    
 
 
 
@@ -199,6 +177,7 @@ from .constants import PaymentStatus
 
 class Order(models.Model):
     name = CharField(_("Customer Name"), max_length=254, blank=False, null=False)
+    # products = models.ForeignKey(AddToCart, on_delete=models.CASCADE)
     amount = models.FloatField(_("Amount"), null=False, blank=False)
     email = CharField(_("Email Address"), max_length=254, blank=True, null=True)
     landmark = CharField(_("Land Mark"), max_length=254, blank=True, null=True)
@@ -224,7 +203,6 @@ class Order(models.Model):
     def __str__(self):
         return f"{self.id}-{self.name}-{self.status}"
 
-
 class CashonDeliveyOrders(models.Model):
     name = CharField(_("Customer Name"), max_length=254, blank=False, null=False)
     amount = models.FloatField(_("Amount"), null=False, blank=False)
@@ -234,6 +212,36 @@ class CashonDeliveyOrders(models.Model):
     contact = models.FloatField(_("Contact"), null=True, blank=True)
     
     
-    
     def __str__(self):
         return self.name 
+    
+class NoStock(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE) 
+    
+    def __str__(self):
+        return self.product.product
+   
+class OrderTracking(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True, blank = True)
+    user = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True, blank = True)
+    orderPlaced = models.BooleanField(default=False)
+    orderPlacedtime = models.DateTimeField(blank=True, null=True)
+    preparingToShip = models.BooleanField(default=False)
+    preparingToShiptime = models.DateTimeField(blank=True, null=True)
+    Shipped = models.BooleanField(default=False)
+    ShippedTime = models.DateTimeField(blank=True, null=True)
+    Delivered = models.BooleanField(default=False)
+    DeliveredDateAndTime = models.DateTimeField(blank=True, null=True)
+    
+    def __str__(self):
+        return self.user.customer_name
+
+class CustomerProductRating(models.Model):
+    user = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True, blank = True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank = True)
+    rating = models.FloatField(default=0, null=True, blank = True)
+    
+class Rating(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank = True)
+    rating = models.FloatField(default=0, null=True, blank = True)
+    

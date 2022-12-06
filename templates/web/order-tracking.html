@@ -91,14 +91,15 @@
             <div class="row g-sm-4 g-3">
                 <div class="col-xxl-3 col-xl-4 col-lg-6">
                     <div class="order-image">
-                        <img src="https://themes.pixelstrap.com/fastkart/assets/images/vegetable/product/6.png"
-                            class="img-fluid blur-up lazyload" alt="">
+                        <img src="{% static 'images_new/delivery-motorcycle.webp' %}" class="img-fluid blur-up lazyload" alt="">
+                        {% comment %} <img src="https://themes.pixelstrap.com/fastkart/assets/images/vegetable/product/6.png"
+                            class="img-fluid blur-up lazyload" alt=""> {% endcomment %}
                     </div>
                 </div>
 
                 <div class="col-xxl-9 col-xl-8 col-lg-6">
                     <div class="row g-sm-4 g-3">
-                        <div class="col-xl-4 col-sm-6">
+                        {% comment %} <div class="col-xl-4 col-sm-6">
                             <div class="order-details-contain">
                                 <div class="order-tracking-icon">
                                     <i data-feather="package" class="text-content"></i>
@@ -136,7 +137,7 @@
                                     <h4>Letter</h4>
                                 </div>
                             </div>
-                        </div>
+                        </div> {% endcomment %}
 
                         <div class="col-xl-4 col-sm-6">
                             <div class="order-details-contain">
@@ -179,26 +180,50 @@
 
                         <div class="col-12 overflow-hidden">
                             <ol class="progtrckr">
+                                {% if orderTracking.orderPlacedtime %}
                                 <li class="progtrckr-done">
-                                    <h5>Order Processing</h5>
-                                    <h6>05:43 AM</h6>
+                                    <h5>orderPlaced</h5>
+                                    <h6>{{orderTracking.orderPlacedtime}} AM</h6>
                                 </li>
+                                {% else %}
+                                <li class="progtrckr-todo">
+                                    <h5>orderPlaced</h5>
+                                    <h6>Pending</h6>
+                                </li>
+                                {% endif %}
+                                {% if orderTracking.preparingToShiptime %}
                                 <li class="progtrckr-done">
-                                    <h5>Pre-Production</h5>
-                                    <h6>01:21 PM</h6>
+                                    <h5>preparingToShip</h5>
+                                    <h6>{{orderTracking.preparingToShiptime}} PM</h6>
                                 </li>
+                                {% else %}
+                                <li class="progtrckr-todo">
+                                    <h5>preparingToShip</h5>
+                                    <h6>Pending</h6>
+                                </li>
+                                {% endif %}
+                                {% if orderTracking.ShippedTime %}
                                 <li class="progtrckr-done">
-                                    <h5>In Production</h5>
-                                    <h6>Processing</h6>
+                                    <h5>Shipped</h5>
+                                    <h6>{{orderTracking.ShippedTime}}</h6>
                                 </li>
+                                {% else %}
                                 <li class="progtrckr-todo">
                                     <h5>Shipped</h5>
                                     <h6>Pending</h6>
                                 </li>
+                                {% endif %}
+                                {% if orderTracking.DeliveredDateAndTime %}
+                                <li class="progtrckr-done">
+                                    <h5>Delivered</h5>
+                                    <h6>{{orderTracking.DeliveredDateAndTime}}</h6>
+                                </li>
+                                {% else %}
                                 <li class="progtrckr-todo">
                                     <h5>Delivered</h5>
                                     <h6>Pending</h6>
                                 </li>
+                                {% endif %}
                             </ol>
                         </div>
                     </div>
@@ -209,7 +234,7 @@
     <!-- Order Detail Section End -->
 
     <!-- Order Table Section Start -->
-    <section class="order-table-section section-b-space">
+    {% comment %} <section class="order-table-section section-b-space">
         <div class="container-fluid-lg">
             <div class="row">
                 <div class="col-12">
@@ -257,7 +282,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> {% endcomment %}
     <!-- Order Table Section End -->
 
     <!-- Footer Section Start -->

@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'django-insecure-auwy2+#82xdui9^b#j32sl_-nl-i11*0mr%@2hr+7i$@x*p!3!'
+
 SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'phone_field',
     'versatileimagefield',
     'tinymce',
+    
      
     'django.contrib.admin',
     'django.contrib.auth',

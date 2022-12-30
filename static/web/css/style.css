@@ -25125,7 +25125,7 @@ table:not(:last-child):last-child>* {
     align-items: center;
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
-    justify-content: space-between
+    /* justify-content: space-between */
 }
 
 @media (max-width: 1460px) {
@@ -25156,7 +25156,7 @@ table:not(:last-child):last-child>* {
         align-items: center;
         -webkit-box-pack: justify;
         -ms-flex-pack: justify;
-        justify-content: space-between
+        /* justify-content: space-between */
     }
 }
 

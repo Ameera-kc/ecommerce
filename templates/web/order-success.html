@@ -122,7 +122,12 @@
                             </div>
 
                             <div class="order-contain">
-                                <h3 class="theme-color">Order success</h3>
+                                {% if status %}
+                                <h3 class="theme-color">Payment Status  {{status}}</h3>
+                                {% endif %}
+                                {% if order_id %}
+                                <h3 class="theme-color">Your Order Id{{order_id}}</h3>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -136,7 +141,7 @@
     <section class="cart-section section-b-space">
         <div class="container-fluid-lg">
             <div class="row g-sm-4 g-3">
-                <div class="col-xxl-9 col-lg-8">
+                {% comment %} <div class="col-xxl-9 col-lg-8">
                     <div class="cart-table order-table order-table-2">
                         <div class="table-responsive">
                             <table class="table mb-0">
@@ -255,7 +260,7 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                </div> {% endcomment %}
 
                 <div class="col-xxl-3 col-lg-4">
                     <div class="row g-4">
@@ -293,7 +298,15 @@
                         </div> {% endcomment %}
 
                         <div class="col-lg-12 col-sm-6">
-                            <div class="summery-box">
+                            <div class="service-image">
+                                
+                                <a href={% url 'user:order_tracking' %} class="text-danger"class="col-lg-12 text-center">Track Your Order</a>
+                                <img src="{% static 'web/svg/delivery.svg' %}"
+                                class="blur-up lazyload" alt="">
+                            </div>
+                            
+                            {% comment %} <div class="summery-box">
+
                                 <div class="summery-header d-block">
                                     <h3>Shipping Address</h3>
                                 </div>
@@ -317,10 +330,10 @@
                                         <h4 class="fw-bold">Oct 21, 2021</h4>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> {% endcomment %}
                         </div>
 
-                        <div class="col-12">
+                        {% comment %} <div class="col-12">
                             <div class="summery-box">
                                 <div class="summery-header d-block">
                                     <h3>Payment Method</h3>
@@ -333,7 +346,7 @@
                                     </li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> {% endcomment %}
                     </div>
                 </div>
             </div>

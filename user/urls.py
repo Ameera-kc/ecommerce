@@ -17,8 +17,6 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("login", views.login_views, name="login"),
     path("logout", views.logout_view, name="logout"),
-    path("order--success", views.order_success2, name="order__success"),
-    path("order-tracking", views.order_tracking, name="order_tracking"),
     path("product/<int:id>", views.product, name="product"),
     path("search", views.search, name="search"),
     path("seller-dashboard", views.seller_dashboard, name="seller_dashboard"),
@@ -43,5 +41,10 @@ urlpatterns = [
     
     # rating
     path("productrating/<int:id>", views.productrating, name="productrating"),
+    
+    # cashon delivery 
+    path("order--success", views.order_success2, name="order__success"),
+    
+    path("order-tracking", views.order_tracking, name="order_tracking"),
     
 ]

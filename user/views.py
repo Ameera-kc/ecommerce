@@ -13,7 +13,7 @@ from django.contrib.auth import logout
 from django.db.models import Q
 from django.http import JsonResponse
 from django.db.models import Sum
-
+import datetime
 import razorpay
 from ecom.settings import RAZORPAY_API_KEY,RAZORPAY_API_SECRET_KEY
 # from django.http.response import JsonResponse
@@ -109,34 +109,32 @@ def index(request):
 
 def product(request, id):
     products = Product.objects.get(id=id)
-    stars=Rating.objects.get(id=id)
-    print(stars)
-    print(stars.rating)
-    if stars.rating:
-        
-        print(stars.rating)
-        
-        
-        nostar=(stars.rating)-5
-        print(nostar)
+    sub = products.subcategory
     if products.offer_price:
-            percentage=((products.price-products.offer_price)/products.price)*100
-            sub = products.subcategory
-            context = {
+        percentage=((products.price-products.offer_price)/products.price)*100
+    else:
+        percentage=None
+    if Rating.objects.filter(product__product=products):
+        stars_obj=Rating.objects.get(product__product=products)
+        stars=int(stars_obj.rating)
+        nostar=5-stars
+        print("nostar",nostar)
+        print("type of nostar",type(nostar))
+        context = {
             "products": products,
             "subcategory": sub,
             "percentage":percentage,
             "stars":stars,
             "nostar":nostar
             }
-            return render(request, "web/product-slider.html", context)
     else:
-        sub = products.subcategory
         context = {
             "products": products,
             "subcategory": sub,
+            "percentage":percentage
             }
-        return render(request, "web/product-slider.html", context)
+    return render(request, "web/product-slider.html", context)
+
         
 def shop(request,id):
     category = Category.objects.get(id=id)
@@ -412,14 +410,17 @@ def order_payment(request):
         address = request.POST.get("address")
         contact = request.POST.get("contact")
         landmark = request.POST.get("landmark")
+        date = datetime.datetime.now().strftime("%Y-%d-%m %H:%M:%S")
+        print(date,"date")
         client = razorpay.Client(auth=(RAZORPAY_API_KEY,RAZORPAY_API_SECRET_KEY))
         razorpay_order = client.order.create(
             {"amount": int(amount) * 100, "currency": "INR", "payment_capture": "1"}
         )
         order = Order.objects.create(
-            name=name, amount=amount, email=email, address=address, contact=contact, landmark=landmark, provider_order_id=razorpay_order["id"]
+            order_date=str(date) ,name=name, amount=amount, email=email, address=address, contact=contact, landmark=landmark, provider_order_id=razorpay_order["id"]
         )
         order.save()
+        print(order.order_date,"order.order_date")
         return render(
             request,
             "web/payment.html",
@@ -446,8 +447,9 @@ def callback(request):
         order.save()
         if not verify_signature(request.POST):
             order.status = PaymentStatus.SUCCESS
+            order.provider_order_id = order.provider_order_id
             order.save()
-            return render(request, "web/order-success.html", context={"status": order.status})
+            return render(request, "web/order-success.html", context={"status": order.status,"order_id":order.provider_order_id})
         else:
             order.status = PaymentStatus.FAILURE
             order.save()
@@ -463,6 +465,7 @@ def callback(request):
         order.save()
         return render(request, "web/order-success.html", context={"status": order.status})
 
+
 def order_success2(request):
     if request.method == "POST":
         name = request.POST.get("name")
@@ -471,10 +474,13 @@ def order_success2(request):
         contact = request.POST.get("contact")
         email = request.POST.get("email")
         landmark = request.POST.get("landmark")
+        date = datetime.datetime.now()
+        print(date,"date")
         order = CashonDeliveyOrders.objects.create(
-            name=name, amount=amount, address=address, contact=contact, email=email, landmark=landmark
+            order_date=date, name=name, amount=amount, address=address, contact=contact, email=email, landmark=landmark
         )
         order.save()
+        print(order.order_date,"order.order_date")
         return render(
             request,
             "web/order-success.html",
@@ -484,7 +490,7 @@ def order_success2(request):
                 "order": order,
             },
         )
-    return render(request, "request,'web/order-success.html',context")
+    return render(request,'web/order-success.html')
     
 def about_us(request):
     context = {}
@@ -499,13 +505,59 @@ def contact_us(request):
     return render(request, "web/contact-us.html", context)
 
 def order_tracking(request):
-    my_p = Customer.objects.get(customer_name=request.user)
-    orderTracking = OrderTracking.objects.filter(user=my_p).last()
-    print("order")
-    print(orderTracking.orderPlaced)
-    print("order")
-    context = {"orderTracking":orderTracking}
-    return render(request, "web/order-tracking.html", context)
+    my_p = Customer.objects.get(user=request.user) 
+    ordertracking = OrderTracking.objects.filter(user=my_p)
+    kw=request.GET.get("search")
+    if kw:
+        if (Order.objects.filter(Q(provider_order_id__icontains=kw))):
+            results = Order.objects.filter(Q(provider_order_id__icontains=kw))
+            print(kw)
+            print(results)
+            for i in ordertracking.values():
+                orderPlaced = (i['orderPlaced'])
+                orderPlacedtime = (i['orderPlacedtime'])
+                preparingToShip = (i['preparingToShip'])
+                preparingToShiptime = (i['preparingToShiptime'])
+                Shipped = (i['Shipped'])
+                ShippedTime = (i['ShippedTime'])
+                Delivered = (i['Delivered'])
+                DeliveredDateAndTime = (i['DeliveredDateAndTime'])
+                context = {
+                "orderPlaced":orderPlaced,
+                "orderPlacedtime":orderPlacedtime,
+                "preparingToShip":preparingToShip,
+                "preparingToShiptime":preparingToShiptime,
+                "Shipped":Shipped,
+                "ShippedTime":ShippedTime,
+                "Delivered":Delivered,
+                "DeliveredDateAndTime":DeliveredDateAndTime,
+                "results" : results,
+                "status" : 1,
+                }
+                
+                return render(request, "web/order-tracking.html", context) 
+            return render(request, "web/order-tracking.html", context) 
+        else: 
+            messages.error(request, "No matching products found...") 
+            context = {
+            "status":0
+            }
+            return render(request, "web/order-tracking.html", context) 
+    else:
+        return render(request, "web/order-tracking.html")
+    
+    
+    
+    
+   
+    
+
+
+
+
+
+
+
 
 def search(request):
     kw=request.GET.get("search")
@@ -545,54 +597,59 @@ def error_404(request):
     return render(request, "web/404.html", context)
 
 def productrating(request,id):
-    print(id)
-    user=Customer.objects.get(user=request.user)
-    code=request.GET.get("rg1")
-    print("code",code)
-    star=0
-    if code == 5:
-        star=1
-        print("star",star)
-    elif code == 4:
-        star=2
-        print("star",star)
-    elif code == 3:
-        star=3
-        print("star",star)
-    elif code == 2:
-        star=4
-        print("star",star)
-    elif code == 1:
-        star=5
-        print("star",star)
-    else:
-        star=0
-        print("star",star)
-       
+    # user=Customer.objects.get(user = request.user)
+    user = request.GET.get("name")
+    code = int(request.GET.get("rg1"))
+    email=request.GET.get("email")
     name=Product.objects.get(id=id)
-    customrating=CustomerProductRating.objects.create(user=user,product=name,rating=star)
-    customrating.save()
+    if code == 5:
+        customrating=CustomerProductRating.objects.create(user=user,product=name,rating=1,email=email)
+        customrating.save()
+    elif code == 4:
+        customrating=CustomerProductRating.objects.create(user=user,product=name,rating=2,email=email)
+        customrating.save()
+    elif code == 3:
+        customrating=CustomerProductRating.objects.create(user=user,product=name,rating=3,email=email)
+        customrating.save()
+    elif code == 2:
+        customrating=CustomerProductRating.objects.create(user=user,product=name,rating=4,email=email)
+        customrating.save()
+    elif code == 1:
+        customrating=CustomerProductRating.objects.create(user=user,product=name,rating=5,email=email)
+        customrating.save()
+    else:
+        star=int(0)
+        customrating=CustomerProductRating.objects.create(user=user,product=name,rating=star,email=email)
+        customrating.save()
     rates=CustomerProductRating.objects.filter(product=name).aggregate(Sum('rating'))
-    print(rates['rating__sum'])
+    print("rates",rates)
     rate = rates['rating__sum']
+    print("rrrrrrrrrrrrrr")
+    print("rate",rate)
     if rate == None:
         rate=0
     count=CustomerProductRating.objects.filter(product=name).count()
-    print(count)
+    print(type(count),"type")
     if count == 0:
-        print("count 0 ")
-        rating=Rating.objects.create(product=name,rating=rate)
-        rating.save()
+        if Rating.objects.create(product=name):
+            rating=Rating.objects.update(product=name,rating=rate)
+            rating.save()
+        else:
+            rating=Rating.objects.create(product=name,rating=rate)
+            rating.save()
         return redirect('user:product',id)
     else:
-        print("count")
         c=count*5
-        rates=rate/c
+        print("c",c)
+        rates=c/rates
+        print("rates",rates)
         rates=rates*10
-        print(rates)
-        rating=Rating.objects.create(product=name,rating=rates)
-        rating.save()
-        print(name)
+        print("rates",rates)
+        if Rating.objects.filter(product__product=name):
+            Rating.objects.filter(product=name).update(rating=rates)
+        else:
+            rating=Rating.objects.create(product=name,rating=rates)
+            rating.save()
         return redirect('user:product',id)
     
    

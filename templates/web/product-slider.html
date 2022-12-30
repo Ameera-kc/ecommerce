@@ -3,10 +3,14 @@
 {% load static %}
 
 {% block content %}
+{% load myfilter %}
 <style>
 
     .wrapper {
         display: inline-block;
+        border: 1px solid #ced4da;
+        padding-top: 5px;
+        padding-right: 75px;
       }
       .wrapper * {
         float: right;
@@ -19,12 +23,9 @@
         {% comment %} width: 26px;
         height: 50px; {% endcomment %}
       }
-      
       input:checked ~ label {
         color: red;
       }
-
-
     </style>
 
 
@@ -182,21 +183,34 @@
                             {% endif %}
                         <div class="col-12 wow fadeInUp">
                             <div class="right-box-contain">
-                                
+                                {% if percentage %}
                                 <h6 class="offer-top">{{percentage|floatformat:2}}% Off</h6>
+                                {% endif %}
                                 <h2 class="name">{{products.product}}</h2>
                                 <div class="price-rating">
-                                    <h3 class="theme-color price">Rs {{products.offer_price}}<del class="text-content">Rs {{products.price}}</del> 
+                                    {% if products.offer_price %}
+                                    <h3 class="theme-color price">Rs {{products.offer_price}}</h3>
+                                        <del class="text-content">Rs {{products.price}}</del> 
+                                        {% else %}
+                                        <h3 class="theme-color price">Rs {{products.price}}</h3>
+                                    {% endif %}
                                         {% comment %} <span class="offer theme-color">(8% off)</span></h3> {% endcomment %}
                                     <div class="product-rating custom-rate">
                                         <ul class="rating">
-                                            {% for star in stars %}
+                                            
+                                           
+                                            
+                                            {% if stars %}
+                                            {% for s in stars|times %}
                                             <li>
                                                 <i data-feather="star" class="fill"></i>
                                             </li>
                                             {% endfor %}
-                                            {% if nostar %}
-                                            {% for star in nostar %}
+                                            {% endif %}
+                                            
+                                            
+                                            {% if stars > 0 %}
+                                            {% for star in nostar|times %}
                                             <li>
                                                 <i data-feather="star"></i>
                                             </li>
@@ -234,7 +248,7 @@
                                     </ul>
                                 </div> -->
 
-                                <div class="time deal-timer product-deal-timer mx-md-0 mx-auto" id="clockdiv-1"
+                                {% comment %} <div class="time deal-timer product-deal-timer mx-md-0 mx-auto" id="clockdiv-1"
                                     data-hours="1" data-minutes="2" data-seconds="3">
                                     <div class="product-title">
                                         <h4>Hurry up! Sales Ends In</h4>
@@ -273,7 +287,7 @@
                                             </div>
                                         </li>
                                     </ul>
-                                </div>
+                                </div> {% endcomment %}
 
                                 <div class="note-box product-packege">
                                     {% comment %} <div class="cart_qty qty-box product-qty">
@@ -422,7 +436,7 @@
                                                     vulputate enim nulla aliquet porttitor lacus luctus accumsan.</p>
                                             </div> {% endcomment %}
 
-                                            <div class="banner-contain nav-desh">
+                                            {% comment %} <div class="banner-contain nav-desh">
                                                 <img src="{% static 'web/images_new/Banner5-01.jpg' %}"
                                                     class="bg-img blur-up lazyload" alt="">
                                                 <div class="banner-details p-center banner-b-space w-100 text-center">
@@ -430,7 +444,7 @@
                                                         <br><br><br><br><br><br><br><br>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> {% endcomment %}
 
                                             <div class="nav-desh">
                                                 <div class="desh-title">
@@ -526,11 +540,11 @@
                                         <div class="review-box">
                                             <div class="row g-4">
                                                 <div class="col-xl-6">
-                                                    <div class="review-title">
+                                                    {% comment %} <div class="review-title">
                                                         <h4 class="fw-500">Customer reviews</h4>
-                                                    </div>
+                                                    </div> {% endcomment %}
 
-                                                    <div class="d-flex">
+                                                    {% comment %} <div class="d-flex">
                                                         <div class="product-rating">
                                                             <ul class="rating">
                                                                 <li>
@@ -551,9 +565,9 @@
                                                             </ul>
                                                         </div>
                                                         <h6 class="ms-3">4.2 Out Of 5</h6>
-                                                    </div>
+                                                    </div> {% endcomment %}
 
-                                                    <div class="rating-box">
+                                                    {% comment %} <div class="rating-box">
                                                         <ul>
                                                             <li>
                                                                 <div class="rating-list">
@@ -615,36 +629,31 @@
                                                                 </div>
                                                             </li>
                                                         </ul>
-                                                    </div>
-                                                </div>
+                                                    </div> {% endcomment %}
 
-                                                <div class="col-xl-6">
                                                     <div class="review-title">
                                                         <h4 class="fw-500">Add a review</h4>
                                                     </div>
 
                                                     <div class="row g-4">
                                                         <form method="GET" action="/productrating/{{products.id}}">
-                                                        <div class="col-md-6">
+                                                            <div class="col-md-6">
                                                             <div class="form-floating theme-form-floating">
                                                                 <input type="text" class="form-control" id="name" name="name"
                                                                     placeholder="Name">
                                                                 <label for="name">Your Name</label>
                                                             </div>
-                                                        </div>
+                                                            </div>
 
-                                                        <div class="col-md-6">
+                                                            <div class="col-md-6">
                                                             <div class="form-floating theme-form-floating">
                                                                 <input type="email" class="form-control" id="email" name="email"
                                                                     placeholder="Email Address">
                                                                 <label for="email">Email Address</label>
                                                             </div>
-                                                        </div>
+                                                            </div>
 
-                                                        
-                                                        
-
-                                                        <div class="col-12">
+                                                            <div class="col-12">
                                                             <div class="form-floating theme-form-floating">
                                                                 <textarea class="form-control"
                                                                     placeholder="Leave a comment here"
@@ -653,31 +662,87 @@
                                                                 <label for="floatingTextarea2">Write Your
                                                                     Comment</label>
                                                             </div>
-                                                        </div>
-
-                                                        <div class="col-12">
-                                                            <div class="form-floating theme-form-floating">
-                                                                <form method="GET" action="/productrating/{{products.id}}">
-                                                                    <div class="wrapper">
-                                                                        <input type="radio" id="r1" name="rg1" value=1>
-                                                                        <label for="r1">&#10038;</label>
-                                                                        <input type="radio" id="r2" name="rg1" value=2>
-                                                                        <label for="r2">&#10038;</label>
-                                                                        <input type="radio" id="r3" name="rg1" value=3>
-                                                                        <label for="r3">&#10038;</label>
-                                                                        <input type="radio" id="r4" name="rg1" value=4>
-                                                                        <label for="r4">&#10038;</label>
-                                                                        <input type="radio" id="r5" name="rg1" value=5>
-                                                                        <label for="r5">&#10038;</label>
-                                                                    </div>
-                                                                        <button class="btn-apply" type="submit">Apply</button>
-                                                                </form>
-                                                                <p id="demo"></p>
                                                             </div>
-                                                        </div>
-                                                    </form>
+
+                                                            <div class="col-12">
+                                                            <div class="form-floating theme-form-floating">
+                                                                {% comment %} <form method="GET" action="/productrating/{{products.id}}"> {% endcomment %}
+                                                                    <div class="wrapper" style="border-color:1px solid #ced4da; !important">
+                                                                        <input  type="radio" id="r1" name="rg1" value=1>
+                                                                        <label class="form-control" style="width:10%" for="r1">&#10038;</label>
+                                                                        <input  type="radio" id="r2" name="rg1" value=2>
+                                                                        <label class="form-control" style="width:10%" for="r2">&#10038;</label>
+                                                                        <input  type="radio" id="r3" name="rg1" value=3>
+                                                                        <label class="form-control" style="width:10%" for="r3">&#10038;</label>
+                                                                        <input  type="radio" id="r4" name="rg1" value=4>
+                                                                        <label class="form-control" style="width:10%" for="r4">&#10038;</label>
+                                                                        <input  type="radio" id="r5" name="rg1" value=5>
+                                                                        <label class="form-control" style="width:10%" for="r5">&#10038;</label>
+                                                                    </div>
+                                                                        <button class="form-control" class="btn-apply" type="submit">Apply</button>
+                                                                {% comment %} </form> {% endcomment %}
+                                                            </div>
+                                                            </div>
+                                                        </form>
                                                     </div>
                                                 </div>
+
+                                                {% comment %} <div class="col-xl-6">
+                                                    <div class="review-title">
+                                                        <h4 class="fw-500">Add a review</h4>
+                                                    </div>
+
+                                                    <div class="row g-4">
+                                                        <form method="GET" action="/productrating/{{products.id}}">
+                                                            <div class="col-md-6">
+                                                            <div class="form-floating theme-form-floating">
+                                                                <input type="text" class="form-control" id="name" name="name"
+                                                                    placeholder="Name">
+                                                                <label for="name">Your Name</label>
+                                                            </div>
+                                                            </div>
+
+                                                            <div class="col-md-6">
+                                                            <div class="form-floating theme-form-floating">
+                                                                <input type="email" class="form-control" id="email" name="email"
+                                                                    placeholder="Email Address">
+                                                                <label for="email">Email Address</label>
+                                                            </div>
+                                                            </div>
+
+                                                            <div class="col-12">
+                                                            <div class="form-floating theme-form-floating">
+                                                                <textarea class="form-control"
+                                                                    placeholder="Leave a comment here"
+                                                                    id="floatingTextarea2" name="review"
+                                                                    style="height: 150px"></textarea>
+                                                                <label for="floatingTextarea2">Write Your
+                                                                    Comment</label>
+                                                            </div>
+                                                            </div>
+
+                                                            <div class="col-12">
+                                                            <div class="form-floating theme-form-floating">
+                                                               
+                                                                    <div class="wrapper" style="border-color:1px solid #ced4da; !important">
+                                                                        <input  type="radio" id="r1" name="rg1" value=1>
+                                                                        <label class="form-control" style="width:10%" for="r1">&#10038;</label>
+                                                                        <input  type="radio" id="r2" name="rg1" value=2>
+                                                                        <label class="form-control" style="width:10%" for="r2">&#10038;</label>
+                                                                        <input  type="radio" id="r3" name="rg1" value=3>
+                                                                        <label class="form-control" style="width:10%" for="r3">&#10038;</label>
+                                                                        <input  type="radio" id="r4" name="rg1" value=4>
+                                                                        <label class="form-control" style="width:10%" for="r4">&#10038;</label>
+                                                                        <input  type="radio" id="r5" name="rg1" value=5>
+                                                                        <label class="form-control" style="width:10%" for="r5">&#10038;</label>
+                                                                    </div>
+                                                                        <button class="form-control" class="btn-apply" type="submit">Apply</button>
+                                                               
+                                                            </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div> {% endcomment %}
                                                 {% comment %} rating {% endcomment %}
 
 

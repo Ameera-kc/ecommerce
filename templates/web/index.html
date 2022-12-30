@@ -375,14 +375,14 @@
                                 {% for item in bestseller %}
                                 <li>
                                     <div class="offer-product">
-                                        <a href="{% url 'user:shop' item.id %}" class="offer-image">
+                                        <a href="{% url 'user:product' item.id %}" class="offer-image">
                                             <img src="{{item.image.url}}"
                                                 class="blur-up lazyload" alt="">
                                         </a>
 
                                         <div class="offer-detail">
                                             <div>
-                                                <a href="{% url 'user:shop' item.id %}" class="text-title">
+                                                <a href="{% url 'user:product' item.id %}" class="text-title">
                                                     <h6 class="name">{{item.product}}</h6>
                                                 </a>
                                                 {% comment %} <span>500 G</span> {% endcomment %}

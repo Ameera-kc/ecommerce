@@ -17,12 +17,11 @@ class Login(AbstractUser):
 class Customer(models.Model):
     user = models.OneToOneField(Login, on_delete=models.CASCADE, related_name='user')
     customer_name = models.CharField(max_length = 100,null=True)
-    phone_number = models.CharField(default=0, null=True, max_length=10, unique = True)  
+    phone_number = models.CharField(null=True, max_length=10, unique = True)  
     email = models.EmailField(max_length=254,null=True)
-    address = models.CharField(max_length = 250)
+    address = models.CharField(max_length = 100,null=True)
     
-    
-    
+ 
     def __str__(self):
         return self.customer_name
 
@@ -116,7 +115,7 @@ class HeaderFlash(models.Model):
 class Wishlist(models.Model):
     user = models.ForeignKey(Customer,on_delete=models.CASCADE, null=True,blank=True)
     product = models.ForeignKey(Product,on_delete=models.CASCADE,default='',null=True,blank=True)
-    added_date = models.DateTimeField(auto_now_add=True)
+    
        
     def __str__(self):
         return self.product
@@ -125,7 +124,7 @@ class Wishlist(models.Model):
 class ChangePassword(models.Model):
     user = models.ForeignKey(Customer,on_delete=models.CASCADE, blank=True, null=True)
     forgot_password_token = models.CharField(max_length=100)
-    created_at = models. DateTimeField(auto_now_add = True)
+    created_at = models.DateTimeField(auto_now_add = True)
     status = models.BooleanField(default=False)
 
     def _str_(self):
@@ -177,12 +176,14 @@ from .constants import PaymentStatus
 
 class Order(models.Model):
     name = CharField(_("Customer Name"), max_length=254, blank=False, null=False)
-    # products = models.ForeignKey(AddToCart, on_delete=models.CASCADE)
+    # products = models.ForeignKey(AddToCart, on_delete=models.CASCADE, blank=False)
     amount = models.FloatField(_("Amount"), null=False, blank=False)
     email = CharField(_("Email Address"), max_length=254, blank=True, null=True)
     landmark = CharField(_("Land Mark"), max_length=254, blank=True, null=True)
     address = CharField(_("Address"), max_length=254, blank=True, null=True)
     contact = models.FloatField(_("Contact"), null=True, blank=True)
+    order_date = models.DateTimeField(null=True, blank=True)
+    
     status = CharField(
         _("Payment Status"),
         default=PaymentStatus.PENDING,
@@ -201,25 +202,30 @@ class Order(models.Model):
     )
 
     def __str__(self):
-        return f"{self.id}-{self.name}-{self.status}"
+        return f"{self.order_date}-{self.name}-{self.status}"
+
+
 
 class CashonDeliveyOrders(models.Model):
     name = CharField(_("Customer Name"), max_length=254, blank=False, null=False)
+    # products = models.ForeignKey(AddToCart, on_delete=models.CASCADE, blank=True) 
     amount = models.FloatField(_("Amount"), null=False, blank=False)
     email = CharField(_("Email Address"), max_length=254, blank=True, null=True)
     landmark = CharField(_("Land Mark"), max_length=254, blank=True, null=True)
     address = CharField(_("Address"), max_length=254, blank=True, null=True)
     contact = models.FloatField(_("Contact"), null=True, blank=True)
-    
+    order_date = models.DateTimeField(null=True, blank=True)
     
     def __str__(self):
-        return self.name 
+        return f"{self.order_date}"
+    
     
 class NoStock(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE) 
     
     def __str__(self):
         return self.product.product
+   
    
 class OrderTracking(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True, blank = True)
@@ -236,12 +242,21 @@ class OrderTracking(models.Model):
     def __str__(self):
         return self.user.customer_name
 
+
 class CustomerProductRating(models.Model):
-    user = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True, blank = True)
+    user = models.CharField(max_length=250, null=True, blank = True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank = True)
-    rating = models.FloatField(default=0, null=True, blank = True)
+    email = models.EmailField(max_length=254,null=True, blank = True)
+    rating = models.IntegerField(default=0, null=True, blank = True)
+    review = models.CharField(max_length=250, null=True, blank = True)
+    
+    def __str__(self):
+        return self.user
+    
     
 class Rating(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank = True)
     rating = models.FloatField(default=0, null=True, blank = True)
     
+    def __str__(self):
+        return self.product.product

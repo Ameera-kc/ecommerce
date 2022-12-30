@@ -548,17 +548,6 @@ def order_tracking(request):
     
     
     
-    
-   
-    
-
-
-
-
-
-
-
-
 def search(request):
     kw=request.GET.get("search")
     if kw:

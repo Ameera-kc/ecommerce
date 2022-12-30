@@ -130,7 +130,8 @@
                             <div class="product-box-3 h-100">
                                 <div class="product-header">
                                     <div class="product-image">
-                                        <a href="product-left-2.html">
+                                        
+                                        <a href="{%url 'user:product' result.id%}">
                                             <img src="{{result.image.url}}"
                                                 class="img-fluid blur-up lazyload" alt="">
                                         </a>
@@ -158,26 +159,7 @@
                                         <a href="{%url 'user:product' result.id%}">
                                             <h5 class="name">{{result.product}}</h5>
                                         </a>
-                                        <div class="product-rating mt-2">
-                                            <ul class="rating">
-                                                <li>
-                                                    <i data-feather="star" class="fill"></i>
-                                                </li>
-                                                <li>
-                                                    <i data-feather="star" class="fill"></i>
-                                                </li>
-                                                <li>
-                                                    <i data-feather="star" class="fill"></i>
-                                                </li>
-                                                <li>
-                                                    <i data-feather="star" class="fill"></i>
-                                                </li>
-                                                <li>
-                                                    <i data-feather="star" class="fill"></i>
-                                                </li>
-                                            </ul>
-                                            <span>(5.0)</span>
-                                        </div>
+                                       
                                         <h6 class="unit">500 G</h6>
                                         <h5 class="price"><span class="theme-color">Rs {{result.price}}</span> <del>Rs {{product.offer_price}}</del>
                                         </h5>
@@ -218,7 +200,7 @@
     <!-- Footer Section Start -->
  
     <!-- Quick View Modal Box Start -->
-    <div class="modal fade theme-modal view-modal" id="view" tabindex="-1" aria-labelledby="exampleModalLabel"
+    {% comment %} <div class="modal fade theme-modal view-modal" id="view" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl modal-fullscreen-sm-down">
             <div class="modal-content">
@@ -309,9 +291,7 @@
                                     <button onclick="location.href = 'cart.html';"
                                         class="btn btn-md add-cart-button icon">Add
                                         To Cart</button>
-                                    <button onclick="location.href = 'product-left.html';"
-                                        class="btn theme-bg-color view-button icon text-white fw-bold btn-md">
-                                        View More Details</button>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -319,11 +299,11 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> {% endcomment %}
     <!-- Quick View Modal Box End -->
 
     <!-- Location Modal Start -->
-    <div class="modal location-modal fade theme-modal" id="locationModal" tabindex="-1"
+    {% comment %} <div class="modal location-modal fade theme-modal" id="locationModal" tabindex="-1"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
             <div class="modal-content">
@@ -420,11 +400,11 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> {% endcomment %}
     <!-- Location Modal End -->
 
     <!-- Deal Box Modal Start -->
-    <div class="modal fade theme-modal deal-modal" id="deal-box" tabindex="-1" aria-labelledby="exampleModalLabel"
+    {% comment %} <div class="modal fade theme-modal deal-modal" id="deal-box" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
             <div class="modal-content">
@@ -500,7 +480,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> {% endcomment %}
     <!-- Deal Box Modal End -->
 
     <!-- Add to cart Modal Start -->

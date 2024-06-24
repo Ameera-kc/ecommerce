@@ -174,6 +174,12 @@ EMAIL_HOST_USER ='kcameera00@gmail.com'
 EMAIL_HOST_PASSWORD = "cyrlphqqsokdbtga"
 # DEFAULT_FROM_EMAIL = 'Celery <kcameera00@gmail.com>'
 
+# EMAIL_BACKEND = config("EMAIL_BACKEND")
+# EMAIL_HOST = config("EMAIL_HOST")
+# EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool, default=True)
+# EMAIL_PORT = config("EMAIL_PORT", cast=int)
+# EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+# EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 
 RAZORPAY_API_KEY = 'rzp_test_gmilUW5MZmHsEK'
 RAZORPAY_API_SECRET_KEY = 'z7rD3fi8O6rS8vsVMRvmbGkW'
